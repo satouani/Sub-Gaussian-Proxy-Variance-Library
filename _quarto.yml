@@ -2,41 +2,48 @@ project:
   type: default
   render:
     - template-computo-python.qmd
-    - README.qmd
+    #- README.qmd
 
-title: "Template for contribution to Computo"
-subtitle: "Example dedicated to `Python` users"
+title: "Optimal sub-Gaussian variance proxy for 3-mass distributions"
+#subtitle: "Example dedicated to `Python` users"
 author:
-  - name: Jane Doe
+  - name: Soufiane Atouani
     corresponding: true
-    email: janedoe@nowhere.moon
-    url: https://janedoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
+    email: soufiane.atouani@inria.fr
+    #url: https://www.inria.fr/fr/centre-inria-universite-grenoble-alpes
+    #orcid: 0000-0000-0000-0000
     affiliations:
-      - name: Name of Affiliation one
-        department: Statistics
-        url: https://someplace.themoon.org
-  - name: John Doe
-    email: johndoe@nowhere.moon
-    url: https://johndoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
+      - name: Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
+        #department: Laboratoire Jean Kuntzmann
+        url: https://www-ljk.imag.fr/
+  - name: Olivier Marchal
+    email: olivier.marchal@univ-st-etienne.fr
+    url: https://math.univ-lyon1.fr/~marchal/index.html
     affiliations:
-      - name: Name of Affiliation two
-        department: Computer Science
-        url: https://someplace.themoon.org
-date: last-modified
+      - name: Université Jean Monnet Saint-Étienne, CNRS, Institut Camille Jordan UMR 5208
+      - name: Institut Universitaire de France, Les Forges 2, 20 Rue du Dr Annino, 42000 Saint-Étienne, France
+        #department: Institut Camille Jordan
+        url: https://math.univ-lyon1.fr/icj/
+  - name: Julyan Arbel 
+    email: julyan.arbel@inria.fr
+    url: https://www.julyanarbel.com/
+    affiliations:
+      - name: Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
+        #department: Laboratoire Jean Kuntzmann
+        url: https://www-ljk.imag.fr/
+date: 17-01-2026
 date-modified: last-modified
-description: |
-  Template for preparing a submission to Computo, using the [quarto journal extension](https://github.com/computorg/computo-quarto-extension), the Jupyter kernel (Python user) and the environment files to set-up the dependencies.
+# description: |
+#   Template for preparing a submission to Computo, using the [quarto journal extension](https://github.com/computorg/computo-quarto-extension), the Jupyter kernel (Python user) and the environment files to set-up the dependencies.
 
-  For a detailed, step-by-step guide on preparing your article, setting up the continuous integration and submitting it to Computo, please consult the [guidelines for authors](https://computo-journal.org/site/guidelines-authors.html).
+#   For a detailed, step-by-step guide on preparing your article, setting up the continuous integration and submitting it to Computo, please consult the [guidelines for authors](https://computo-journal.org/site/guidelines-authors.html).
 abstract: >+
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur posuere vestibulum facilisis. Aenean pretium orci augue, quis lobortis libero accumsan eu. Nam mollis lorem sit amet pellentesque ullamcorper. Curabitur lobortis libero eget malesuada vestibulum. Nam nec nibh massa. Pellentesque porttitor cursus tellus. Mauris urna erat, rhoncus sed faucibus sit amet, venenatis eu ipsum.
-keywords: [key1, key2, key3]
+  We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables, whose moment-generating function has bounded growth at infinity. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied 2-mass or Bernoulli case. We also prove that the discrete uniform distribution over $N$ points is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions.
+keywords: [Sub-Gaussian property, 3-mass distributions, Uniform distribution]
 bibliography: references.bib
-github-user: computorg
-repo: "template-computo-r"
-draft: true # set to false once the build is running
+github-user: satouani
+repo: "Sub-Gaussian-Proxy-Variance-Library.git"
+draft: false # set to false once the build is running
 published: false # will be set to true once accepted
 license: CC-BY-4.0
 format:
