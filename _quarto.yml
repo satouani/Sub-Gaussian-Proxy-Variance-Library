@@ -5,13 +5,10 @@ project:
     #- README.qmd
 
 title: "Optimal sub-Gaussian variance proxy for 3-mass distributions"
-#subtitle: "Example dedicated to `Python` users"
 author:
   - name: Soufiane Atouani
     corresponding: true
     email: soufiane.atouani@inria.fr
-    #url: https://www.inria.fr/fr/centre-inria-universite-grenoble-alpes
-    #orcid: 0000-0000-0000-0000
     affiliations:
       - name: Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
         #department: Laboratoire Jean Kuntzmann
@@ -38,7 +35,7 @@ date-modified: last-modified
 
 #   For a detailed, step-by-step guide on preparing your article, setting up the continuous integration and submitting it to Computo, please consult the [guidelines for authors](https://computo-journal.org/site/guidelines-authors.html).
 abstract: >+
-  We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables, whose moment-generating function has bounded growth at infinity. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied 2-mass or Bernoulli case. We also prove that the discrete uniform distribution over $N$ points is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions.
+ We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables, whose moment-generating function exhibits bounded growth at infinity. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied Bernoulli case. We also prove that the discrete uniform distribution over N points is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions
 keywords: [Sub-Gaussian property, 3-mass distributions, Uniform distribution]
 bibliography: references.bib
 github-user: satouani
@@ -49,4 +46,7 @@ license: CC-BY-4.0
 format:
   computo-html: default
   computo-pdf: default
+          
+        
+
 jupyter: python3

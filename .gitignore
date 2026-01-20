@@ -12,6 +12,8 @@ renv/
 
 # Python and co
 _environment
+/.venv/
+.venv/
 /.micromamba/
 /.joblib
 /.pytest_cache/
@@ -49,3 +51,5 @@ template-computo-julia.tex
 DS_Store
 /.luarc.json
 
+
+**/*.quarto_ipynb
