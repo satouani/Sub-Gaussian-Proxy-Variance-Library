@@ -7,9 +7,9 @@ emerged as a fundamental concept in probability theory due to its profound
 implications in various mathematical disciplines, such as concentration
 inequalities inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration]
 and Bayesian statistics @catoni2007pac. In machine learning, sub-Gaussian
-tails play a crucial role in bandit algorithms @bubeck2012regret, in the
+tails play a crucial role in bandit algorithms @zhou2025logarithmic, in the
 study of the singular values of random matrices @rudelson2010non, and in
-Bayesian neural networks @vladimirova2019understanding, @vladimirova2020sub.
+Bayesian neural networks @vladimirova2019understanding and @vladimirova2020sub.
 
 ::: {#def-subgaussian}
 ## Definition Sub-Gaussian variables
@@ -868,3 +868,8 @@ $$
 $$
 Hence, for any $\sigma^2 \geq \operatorname{Var}[Y]$, we have $g_{\sigma,N}^{(2)}(\lambda) = \sigma^2 - \operatorname{Var}[Z_\lambda] \geq 0$, with equality if and only if $\lambda = 0$. Finally for any $\sigma^2 \geq \operatorname{Var}[Y]$, given that $g_{\sigma,N}^{(2)}(\lambda)$ has no solution on $\mathbb{R}^*_+ \text{ and } \mathbb{R}^*_-$, it follows from @prp-g2zeros that $g_{\sigma,N}$ is non-negative on $\mathbb{R}$. 
 This shows that $Y$ is strictly sub-Gaussian ending the proof.
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

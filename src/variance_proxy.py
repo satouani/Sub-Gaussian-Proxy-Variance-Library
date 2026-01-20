@@ -9,6 +9,8 @@ import warnings
 import math
 
 
+DEFAULT_N_POINTS = 500
+
 def subgaussian_proxy_variance_bernoulli(p: float) -> float:
     """
     Compute the optimal sub-Gaussian  variance proxy for a Bernoulli(p) distribution.
@@ -526,7 +528,7 @@ class SubGaussian3MassSymmetricProxy:
             print("Cannot plot: lambda_star is not computed or invalid.")
             return
             
-        lambdas = np.linspace(self.lambda_star - 1, self.lambda_star + 1, self.DEFAULT_N_POINTS)
+        lambdas = np.linspace(self.lambda_star - 1, self.lambda_star + 1, DEFAULT_N_POINTS)
         equations = [self._equation(lam) for lam in lambdas]
 
         plt.figure(figsize=(8, 5))

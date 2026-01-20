@@ -17,6 +17,9 @@ _environment
 /.micromamba/
 /.joblib
 /.pytest_cache/
+/__pycache__/
+*.pyc
+*.pyo
 
 # Quarto tmp files
 /.quarto/
