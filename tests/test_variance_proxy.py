@@ -12,7 +12,7 @@ import numpy as np
 
 
 check_asymmetric_symmetric_implementation = True
-replicate_paper_beta_bernoulli_figs = True
+replicate_paper_beta_bernoulli_figs = False
 test_3mass_sym_and_assym = True
 
 if check_asymmetric_symmetric_implementation:

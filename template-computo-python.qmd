@@ -257,7 +257,7 @@ $\mathbb{R}_+^*$. A similar result holds for $\mathbb{R}_-^*$.
 Unfortunately the situation becomes more involved when
 $g_Y''(.;\sigma^2)$ has more than one zero on a half-line. However, we can still
 get information when $g_Y''(.;\sigma^2)$ has exactly two zeros on a half-line.
-Two cases are studied in @lem-numberA1 and @lem-numberA2 provided in
+Two cases are studied in @lem-numberA1 and @lem-numberA2 provided in appendix
 @sec-appendix-A which can be put together to obtain the following
 proposition.
 
@@ -456,7 +456,7 @@ In this regime, $\operatorname{Var}[X]=2p < \sigma_{\mathrm{opt}}^{2} < \sigma_1
 ## Asymmetric 3-mass distribution {#subsec-asymmthreepoints}
 
 Let $X$ be a random variable supported on $\{-a,0,a\}$, $a>0$, and $\mathbb{P}(X=-a)=p_1\,,\, \mathbb{P}(X=0)=p_3 = 1-p_1-p_2\,,\, \mathbb{P}(X=a)=p_2$, 
-where $p_1, p_2, p_3\in \left( 0,1\right)$, see @@fig-distrib-plots(b). As before, we may define $Y=\frac{1}{a}X$ and restrict to $a=1$. We also may assume $p_2 \geq p_1$ without loss of generality. We have
+where $p_1, p_2, p_3\in \left( 0,1\right)$, see @fig-distrib-plots(b). As before, we may define $Y=\frac{1}{a}X$ and restrict to $a=1$. We also may assume $p_2 \geq p_1$ without loss of generality. We have
 $\mu:=\mathbb{E}[Y]=-p_1+p_2 \geq 0$ and $\operatorname{Var}[Y]=p_1+p_2-(-p_1+p_2)^2$. 
 We have that $\sigma^2$ is a variance proxy of $Y$ if and only if
 $$\mathbb{E}\big[e^{\lambda Y}\big]=p_1 e^{-\lambda }+ p_2e^{\lambda } +1-p_1-p_2\leq e^{(\frac{\lambda^2\sigma^2}{2}+\lambda \mu)} \,\, ,\,\, \forall \, \lambda\in \mathbb{R}.$$
@@ -500,7 +500,7 @@ When $p_3\leq 4\sqrt{p_1p_2}$, the optimal variance proxy is given by
 $$\sigma_{\mathrm{opt}}^2= \frac{2(p_2-p_1)}{\ln p_2 - \ln p_1}.$$
 :::
 
-The proof is deferred to the Appendix.
+The proof is deferred to the appendix @sec-appendix.
 
 @thm-regime1 implies the following corollary.
 
@@ -576,7 +576,7 @@ $$
 $$
 :::
 
-The proof of @thm-discrete-distribution is postponed to @sec-appendix-proof-uniform.
+The proof of @thm-discrete-distribution is postponed to appendix @sec-appendix-proof-uniform.
 
 # Software implementation {#sec-software}
 
@@ -622,13 +622,9 @@ Olivier Marchal used part of his IUF junior grant G752IUFMAR for this
 research, and Julyan Arbel was partially supported by ANR-21-JSTM-0001
 grant.
 
-::: {.pagebreak}
+# Appendix {#sec-appendix} 
 
-```{=latex}
-\appendix
-```
-
-# Proofs for @sec-charac {#sec-appendix-A}
+## Proofs for @sec-charac {#sec-appendix-A}
 
 In this appendix, we prove @prp-AsymptInf, @thm-GeneralCharac, and @prp-g2zeros. We also establish two auxiliary results, namely @lem-numberA1 and @lem-numberA2, which play a crucial role in the proof of @prp-LemmaMerged.
 
@@ -650,7 +646,7 @@ Thus we conclude that for any $\sigma^2>\max\{\operatorname{Var}[Y],\sup\mathcal
 Let us prove the converse inequality and assume that $\sigma_{\mathrm{opt}}^2< \max\{\operatorname{Var}[Y],\sup\mathcal{S}_c^*\}$. It is well-known that $\operatorname{Var}[Y]$ is always a lower bound for the optimal variance proxy, thus the last inequality is only possible if $\operatorname{Var}[Y]<\sigma_{\mathrm{opt}}^2< \sup\mathcal{S}_c^*$. Thus, there exists $s_c\in \mathcal{S}_c^*$ such that $\sigma_{\mathrm{opt}}^2<s_c$, i.e. there exists $\lambda_c\in \mathbb{R}^*$ such that $g_Y(\lambda_c;s_c)=g_Y'(\lambda_c;s_c)=0$ and $\lambda_c$ is a local minimum of $g_Y(.;s_c)$. We have from the fact that the dependence of $g_Y$ relatively to $\sigma$ is quadratic that:
 $$g_Y(\lambda_c,\sigma^2)=g_Y(\lambda_c,s_c) +\frac{1}{2}\lambda_c^2 (\sigma^2-s_c)=\frac{1}{2}\lambda_c^2 (\sigma^2-s_c).$$
 so that $g_Y(\lambda_c,\sigma^2)<0$ when $\sigma^2<s_c$. This implies that $g_Y(.;\sigma^2)$ is no longer non-negative when $\sigma^2<s_c$ so that $\sigma^2$ is not a variance proxy. This contradicts the fact that $\sigma_{\mathrm{opt}}^2<s_c$ is an optimal variance proxy.
-:::
+
 
 
 **Proof of @prp-g2zeros.**
@@ -698,7 +694,7 @@ A similar result holds on $\mathbb{R}_-^*$.
 
 
 
-# Proofs for @sec-3-mass {#sec-appendix-B}
+## Proofs for @sec-3-mass {#sec-appendix-B}
 In this section we prove @thm-regime1 and @lem-lambda-ordering.
 
 
@@ -738,7 +734,7 @@ Thus we get $\lambda_0 < 0 < \lambda_- < \lambda_+$ under the condition $p_3^2>1
 
 
 
-# Proofs for @sec-uniform {#sec-appendix-proof-uniform}
+## Proofs for @sec-uniform {#sec-appendix-proof-uniform}
 By linearity of the log-MGF and the scaling property of variance proxies, it is convenient to normalize $X$. Define
 $$
 Y := \frac{X-b}{a}.
