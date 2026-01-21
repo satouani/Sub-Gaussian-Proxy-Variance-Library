@@ -105,7 +105,7 @@ $$ {#eq-g_Y}
 
 which is a smooth function of $(\lambda,\sigma^2)$. We have
 $g'_Y(\lambda;\sigma^2) := \lambda\sigma^2 - M_Y'(\lambda)$ and
-$g''_Y(\lambda;\sigma^2) = \sigma^2 - M_Y''(\lambda)$.
+$g^{(2)}_Y(\lambda;\sigma^2) = \sigma^2 - M_Y^{(2)}(\lambda)$.
 Observe that $g_Y(0,\sigma^2) = g'_Y(0,\sigma^2) = 0$.
 Moreover, for $\lambda \neq 0$, the equation
 $g'_Y(\lambda,\sigma^2) = 0$ is equivalent to
@@ -159,7 +159,7 @@ $M_Y(\lambda) \overset{\lambda \to \pm\infty}{=} o(\lambda^2)$, then $Y$ is
 *sub-Gaussian* and
 $\lim_{\lambda\to \pm\infty} g_Y(\lambda;\sigma^2) = +\infty$,
 $\lim_{\lambda\to \pm\infty} g'_Y(\lambda;\sigma^2) = \pm\infty$, and
-$\lim_{\lambda\to \pm\infty} g''_Y(\lambda;\sigma^2) = \sigma^2$.
+$\lim_{\lambda\to \pm\infty} g^{(2)}_Y(\lambda;\sigma^2) = \sigma^2$.
 :::
 
 ::: {#fig-ImageTheorem2}
@@ -216,7 +216,7 @@ When numerical solutions are found, one should check numerically if $\lambda$ is
 a local minimum of
 $g_Y\!\left(.;\sigma^2 = M_Y'(\lambda)/\lambda\right)$
 (a sufficient condition being that
-$g_Y''\!\left(\lambda;\sigma^2 = M_Y'(\lambda)/\lambda\right) > 0$).
+$g_Y^{(2)}\!\left(\lambda;\sigma^2 = M_Y'(\lambda)/\lambda\right) > 0$).
 Collecting all solutions, one then selects the optimal variance proxy by looking
 at the maximal values of $M_Y'(\lambda)/\lambda$ that can easily be computed
 numerically. In practice, such an algorithm is particularly efficient if the
@@ -241,33 +241,33 @@ The main numerical and theoretical difficulty in studying elements of
 $\mathcal{L}_c^*$ is the fact that they must be local minima of
 $g_Y(.;\sigma^2)$. This property is tricky to verify because the second
 derivative may also vanish at these points, making the analysis complicated.
-However, when $g_Y''(.;\sigma^2)$ has very few zeros, it is possible to study
+However, when $g_Y^{(2)}(.;\sigma^2)$ has very few zeros, it is possible to study
 its sign and thus remove this complication.
 
 ::: {#prp-g2zeros}
-## Case when $g_Y''$ has at most one zero on a half-line
+## Case when $g_Y^{(2)}$ has at most one zero on a half-line
 
 Assume that $M_Y$ is a smooth function and that
 $M_Y(\lambda) \overset{\lambda\to \pm\infty}{=} o(\lambda^2)$.
-Assume that $g_Y''(.;\sigma^2)$ has no or one zero on $\mathbb{R}_+^*$ for some
+Assume that $g_Y^{(2)}(.;\sigma^2)$ has no or one zero on $\mathbb{R}_+^*$ for some
 $\sigma^2 \geq \operatorname{Var}[Y]$, then $g_Y(.;\sigma^2)$ is positive on
 $\mathbb{R}_+^*$. A similar result holds for $\mathbb{R}_-^*$.
 :::
 
 Unfortunately the situation becomes more involved when
-$g_Y''(.;\sigma^2)$ has more than one zero on a half-line. However, we can still
-get information when $g_Y''(.;\sigma^2)$ has exactly two zeros on a half-line.
+$g_Y^{(2)}(.;\sigma^2)$ has more than one zero on a half-line. However, we can still
+get information when $g_Y^{(2)}(.;\sigma^2)$ has exactly two zeros on a half-line.
 Two cases are studied in @lem-numberA1 and @lem-numberA2 provided in appendix
 @sec-appendix-A which can be put together to obtain the following
 proposition.
 
 ::: {#prp-LemmaMerged}
-## Case when $g_Y''$ has exactly two zeros on a half-line
+## Case when $g_Y^{(2)}$ has exactly two zeros on a half-line
 
 Assume that $M_Y$ is a smooth function and that
 $M_Y(\lambda) \overset{\lambda\to \pm\infty}{=} o(\lambda^2)$.
 Also assume that for any $\sigma^2 > 0$,
-$g_Y''(.;\sigma^2)$ has exactly two zeros
+$g_Y^{(2)}(.;\sigma^2)$ has exactly two zeros
 $(\lambda_1(\sigma), \lambda_2(\sigma))$ such that
 $0 < \lambda_1(\sigma) < \lambda_2(\sigma)$.
 Then, with a similar result on $\mathbb{R}_-$:
@@ -283,7 +283,7 @@ Then, with a similar result on $\mathbb{R}_-$:
 :::
 
 @prp-g2zeros and @prp-LemmaMerged are interesting to obtain a characterization of
-the optimal variance proxy when $g_Y''(.;\sigma^2)$ has at most two zeros on each
+the optimal variance proxy when $g_Y^{(2)}(.;\sigma^2)$ has at most two zeros on each
 half-line $\mathbb{R}_\pm^*$. Indeed, in this case the optimal proxy variance is
 obtained as the maximum of $\operatorname{Var}[Y]$, $\sigma_{c,+}^2$, and
 $\sigma_{c,-}^2$, where $\sigma_{c,+}^2$ (resp. $\sigma_{c,-}^2$) is the unique
@@ -639,7 +639,7 @@ Let us first mention that @prp-AsymptInf implies that the optimal variance proxy
 
 **First**, $\lambda_m(\sigma)$ remains outside a positive neighborhood of $0$ denoted $(0,\epsilon)$ when we increase $\sigma$ and thus since $\partial_{\sigma}[g_Y(\lambda_m(\sigma);\sigma^2)]>\epsilon^2 \sigma$ and by assumption $g_Y(\lambda_m(\sigma);\sigma^2)<0$, there exists a value $\sigma_1>\sigma$ for which $g_Y(\lambda_m(\sigma_1);\sigma_1^2)=0$ which is a contradiction because $\sigma_1^2\in \mathcal{S}_c^*$ so that we should have $\sigma\geq \sigma_1$.
 
-**Second**, $\lambda_m(\sigma)\to 0_+$ when we increase $\sigma$. In this case this is a contradiction because $g_Y(.,\sigma^2)$ is locally positive and convex in a positive neighborhood of $0$. Indeed, $g_Y(.,\sigma^2)$ must reach a positive local maximum on $(0,\lambda_m(\sigma))$ that we denote $\lambda_{\text{max}}(\sigma)$. By Rolle's theorem on $(0,\lambda_{\text{max}}(\sigma))$ and $(\lambda_{\text{max}}(\sigma),\lambda_m(\sigma))$, there exist at least two distinct values $(\lambda_1(\sigma),\lambda_2(\sigma))$ with $0<\lambda_1(\sigma)<\lambda_{\text{max}}(\sigma)<\lambda_2(\sigma)<\lambda_m(\sigma)$ such that $g_Y''(\lambda_1(\sigma);\sigma^2)=g_Y''(\lambda_2(\sigma);\sigma^2)=0$. Since $\lambda_m(\sigma)\to 0_+$, we must also have $\lambda_1(\sigma),\lambda_2(\sigma)\to 0_+$ and hence by continuity $g_Y''(0,\sigma^2)\to 0$. But this is impossible since $g_Y''(0;\sigma^2)=(\sigma^2-\operatorname{Var}[Y])>0$ is a positive, increasing function of $\sigma$.
+**Second**, $\lambda_m(\sigma)\to 0_+$ when we increase $\sigma$. In this case this is a contradiction because $g_Y(.,\sigma^2)$ is locally positive and convex in a positive neighborhood of $0$. Indeed, $g_Y(.,\sigma^2)$ must reach a positive local maximum on $(0,\lambda_m(\sigma))$ that we denote $\lambda_{\text{max}}(\sigma)$. By Rolle's theorem on $(0,\lambda_{\text{max}}(\sigma))$ and $(\lambda_{\text{max}}(\sigma),\lambda_m(\sigma))$, there exist at least two distinct values $(\lambda_1(\sigma),\lambda_2(\sigma))$ with $0<\lambda_1(\sigma)<\lambda_{\text{max}}(\sigma)<\lambda_2(\sigma)<\lambda_m(\sigma)$ such that $g_Y^{(2)}(\lambda_1(\sigma);\sigma^2)=g_Y^{(2)}(\lambda_2(\sigma);\sigma^2)=0$. Since $\lambda_m(\sigma)\to 0_+$, we must also have $\lambda_1(\sigma),\lambda_2(\sigma)\to 0_+$ and hence by continuity $g_Y^{(2)}(0,\sigma^2)\to 0$. But this is impossible since $g_Y^{(2)}(0;\sigma^2)=(\sigma^2-\operatorname{Var}[Y])>0$ is a positive, increasing function of $\sigma$.
 
 Thus we conclude that for any $\sigma^2>\max\{\operatorname{Var}[Y],\sup\mathcal{S}_c^*\}$, all local minima of $g_Y(.;\sigma^2)$ are non-negative so that since $\underset{\lambda\to \pm \infty}{\lim} g_Y(\lambda;\sigma^2)=+\infty$, $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}$. Hence $\sigma^2$ is a variance proxy and thus $\sigma_{\mathrm{opt}}^2\leq \max\{\operatorname{Var}[Y],\sup\mathcal{S}_c^*\}$.
 
@@ -650,13 +650,13 @@ so that $g_Y(\lambda_c,\sigma^2)<0$ when $\sigma^2<s_c$. This implies that $g_Y(
 
 
 **Proof of @prp-g2zeros.**
-If $g_Y''(.;\sigma^2)$ has no zero on $\mathbb{R}_+^*$, then it is strictly convex on $\mathbb{R}_+^*$ and since $g_Y(0;\sigma^2)=g_Y'(0;\sigma^2)=0$, $g_Y(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$. Similarly, if $g_Y''(.;\sigma^2)$ has a unique zero on $\mathbb{R}_+^*$, then it cannot change sign at this zero, because $g_Y''(0;\sigma^2)=\sigma^2-\operatorname{Var}[Y]\geq 0$ and $\underset{\lambda\to +\infty}{\lim}g_Y''(\lambda;\sigma^2)=\sigma^2>0$. Hence, we conclude similarly that $g_Y(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$.
+If $g_Y^{(2)}(.;\sigma^2)$ has no zero on $\mathbb{R}_+^*$, then it is strictly convex on $\mathbb{R}_+^*$ and since $g_Y(0;\sigma^2)=g_Y'(0;\sigma^2)=0$, $g_Y(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$. Similarly, if $g_Y^{(2)}(.;\sigma^2)$ has a unique zero on $\mathbb{R}_+^*$, then it cannot change sign at this zero, because $g_Y^{(2)}(0;\sigma^2)=\sigma^2-\operatorname{Var}[Y]\geq 0$ and $\underset{\lambda\to +\infty}{\lim}g_Y^{(2)}(\lambda;\sigma^2)=\sigma^2>0$. Hence, we conclude similarly that $g_Y(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$.
 :::
 
 ::: {#lem-numberA1}
-## Local minimum when $g_Y''(.;\sigma^2)$ has two positive zeros and $\sigma^2>\operatorname{Var}(Y)$
+## Local minimum when $g_Y^{(2)}(.;\sigma^2)$ has two positive zeros and $\sigma^2>\operatorname{Var}(Y)$
 
-Assume that $M_Y$ is a smooth function and that $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$. Moreover, assume that for any $\sigma^2\in \left(\operatorname{Var}[Y],+\infty\right)$, $g_Y''(.;\sigma^2)$ has exactly two positive zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $0<\lambda_1(\sigma)<\lambda_2(\sigma)$. Then, $g_Y(.;\sigma^2)$ has at most one local minimum $\lambda_m(\sigma)$ on $\mathbb{R}_+^*$ and it is necessarily located in $\lambda_m(\sigma)\in\left(\lambda_1(\sigma),\lambda_2(\sigma)\right)$.
+Assume that $M_Y$ is a smooth function and that $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$. Moreover, assume that for any $\sigma^2\in \left(\operatorname{Var}[Y],+\infty\right)$, $g_Y^{(2)}(.;\sigma^2)$ has exactly two positive zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $0<\lambda_1(\sigma)<\lambda_2(\sigma)$. Then, $g_Y(.;\sigma^2)$ has at most one local minimum $\lambda_m(\sigma)$ on $\mathbb{R}_+^*$ and it is necessarily located in $\lambda_m(\sigma)\in\left(\lambda_1(\sigma),\lambda_2(\sigma)\right)$.
 Consequently, the equations $g_Y(\lambda,\sigma^2)=0=g_Y'(\lambda,\sigma^2)$ have at most one solution on $\mathbb{R}_+^*\times \left(\operatorname{Var}[Y],+\infty\right)$ and we have that:
 
 - if they have no solution, then $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}_+$ for any $\sigma^2>\operatorname{Var}[Y]$.
@@ -666,9 +666,9 @@ A similar result is valid on $\mathbb{R}_-^*$.
 :::
 
 
-**Proof of @lem-numberA1.** The proof follows from a precise study of variations. Indeed, let us first notice that for any $\sigma^2>\operatorname{Var}[Y]$, we have that $g_Y(.;\sigma^2)$ is locally convex and positive around $\lambda=0$ since $g_Y''(0;\sigma^2)=\sigma^2-\operatorname{Var}[Y]>0$. We also remind that $\underset{\lambda\to \pm \infty}{\lim} g_Y''(\lambda;\sigma^2)=\sigma^2>0$ so that $g_Y(.;\sigma^2)$ is also convex at infinity. Thus, from the assumption that $g_Y''(.;\sigma^2)$ has exactly two zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ on $\mathbb{R}_+^*$, we conclude that either $g_Y''(.;\sigma^2)$ does not change sign at its zeros and in this case, $g_Y(.;\sigma^2)$ is strictly convex on $\mathbb{R}_+^*$ with $g_Y(0;\sigma^2)=0$ so that it is positive and increasing on $\mathbb{R}_+$, thus there is no solution of $g_Y'(.;\sigma^2)=0$ on $\mathbb{R}_+^*$. Or that $g_Y''(.;\sigma^2)$ is necessarily positive on $(0,\lambda_1(\sigma))$, negative on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and positive on $(\lambda_2(\sigma),+\infty)$. Thus, $g_Y'(.;\sigma^2)$ is increasing on $(0,\lambda_1(\sigma))$ and since $g_Y'(0;\sigma^2)=0$ it is positive on $(0,\lambda_1(\sigma))$. Then, $g_Y'(.;\sigma^2)$ is decreasing on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and then increasing on $(\lambda_2(\sigma),+\infty)$. In particular, $g_Y'(.;\sigma^2)$ admits a unique local minimum at $\lambda=\lambda_2(\sigma)$ on $\mathbb{R}_+^*$. Consequently, if $g_Y'(\lambda_2(\sigma);\sigma^2)\geq 0$, then $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}_+$ and thus since $g_Y(0;\sigma^2)=0$, we get that $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}_+$. Alternatively, if $g_Y'(\lambda_2(\sigma);\sigma^2)<0$, then $g_Y'(.;\sigma^2)$ has exactly two zeros $\lambda_1(\sigma)<\lambda_l(\sigma)<\lambda_r(\sigma)<\lambda_2(\sigma)$ and it is negative on $(\lambda_l(\sigma),\lambda_r(\sigma))$ and positive on $(0,\lambda_l(\sigma))\cup(\lambda_r(\sigma),+\infty)$. Consequently, $g_Y(.;\sigma^2)$ has exactly one local minimum on $\mathbb{R}_+^*$ denoted $\lambda_m(\sigma)$ which is necessarily located in $(\lambda_1(\sigma),\lambda_2(\sigma))$.
+**Proof of @lem-numberA1.** The proof follows from a precise study of variations. Indeed, let us first notice that for any $\sigma^2>\operatorname{Var}[Y]$, we have that $g_Y(.;\sigma^2)$ is locally convex and positive around $\lambda=0$ since $g_Y^{(2)}(0;\sigma^2)=\sigma^2-\operatorname{Var}[Y]>0$. We also remind that $\underset{\lambda\to \pm \infty}{\lim} g_Y^{(2)}(\lambda;\sigma^2)=\sigma^2>0$ so that $g_Y(.;\sigma^2)$ is also convex at infinity. Thus, from the assumption that $g_Y^{(2)}(.;\sigma^2)$ has exactly two zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ on $\mathbb{R}_+^*$, we conclude that either $g_Y^{(2)}(.;\sigma^2)$ does not change sign at its zeros and in this case, $g_Y(.;\sigma^2)$ is strictly convex on $\mathbb{R}_+^*$ with $g_Y(0;\sigma^2)=0$ so that it is positive and increasing on $\mathbb{R}_+$, thus there is no solution of $g_Y'(.;\sigma^2)=0$ on $\mathbb{R}_+^*$. Or that $g_Y^{(2)}(.;\sigma^2)$ is necessarily positive on $(0,\lambda_1(\sigma))$, negative on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and positive on $(\lambda_2(\sigma),+\infty)$. Thus, $g_Y'(.;\sigma^2)$ is increasing on $(0,\lambda_1(\sigma))$ and since $g_Y'(0;\sigma^2)=0$ it is positive on $(0,\lambda_1(\sigma))$. Then, $g_Y'(.;\sigma^2)$ is decreasing on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and then increasing on $(\lambda_2(\sigma),+\infty)$. In particular, $g_Y'(.;\sigma^2)$ admits a unique local minimum at $\lambda=\lambda_2(\sigma)$ on $\mathbb{R}_+^*$. Consequently, if $g_Y'(\lambda_2(\sigma);\sigma^2)\geq 0$, then $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}_+$ and thus since $g_Y(0;\sigma^2)=0$, we get that $g_Y(.;\sigma^2)$ is non-negative on $\mathbb{R}_+$. Alternatively, if $g_Y'(\lambda_2(\sigma);\sigma^2)<0$, then $g_Y'(.;\sigma^2)$ has exactly two zeros $\lambda_1(\sigma)<\lambda_l(\sigma)<\lambda_r(\sigma)<\lambda_2(\sigma)$ and it is negative on $(\lambda_l(\sigma),\lambda_r(\sigma))$ and positive on $(0,\lambda_l(\sigma))\cup(\lambda_r(\sigma),+\infty)$. Consequently, $g_Y(.;\sigma^2)$ has exactly one local minimum on $\mathbb{R}_+^*$ denoted $\lambda_m(\sigma)$ which is necessarily located in $(\lambda_1(\sigma),\lambda_2(\sigma))$.
 Next, let us observe that:
-$$\partial_\sigma[g_Y'(\lambda_2(\sigma);\sigma^2)]=g_Y''(\lambda_2(\sigma);\sigma^2) \partial_\sigma[\lambda_2(\sigma)]+ 2\sigma\lambda_2(\sigma)=2\sigma\lambda_2(\sigma)>0.$$
+$$\partial_\sigma[g_Y'(\lambda_2(\sigma);\sigma^2)]=g_Y^{(2)}(\lambda_2(\sigma);\sigma^2) \partial_\sigma[\lambda_2(\sigma)]+ 2\sigma\lambda_2(\sigma)=2\sigma\lambda_2(\sigma)>0.$$
 Thus, the local minimum of $g_Y'(.;\sigma^2)$ is an increasing function of $\sigma$, so that if it is null for a value $\sigma_1$, then it is positive for $\sigma>\sigma_1$ and negative for $\sigma<\sigma_1$.
 Finally, let us observe that
 $$\partial_\sigma[g_Y(\lambda_m(\sigma);\sigma^2)]=g_Y'(\lambda_m(\sigma);\sigma^2) \partial_\sigma[\lambda_m(\sigma)]+ \sigma\lambda_m(\sigma)^2=\sigma\lambda_m(\sigma)^2>0.$$
@@ -678,18 +678,18 @@ so that $\lambda_m(\sigma)$ is an increasing function of $\sigma$. Let us denote
 We complement @lem-numberA1 with another lemma regarding the situation when $\sigma<\operatorname{Var}[Y]$.
 
 ::: {#lem-numberA2}
-## Local minimum when $g_Y''(.;\sigma^2)$ has two positive zeros and $\sigma^2<\operatorname{Var}(Y)$
+## Local minimum when $g_Y^{(2)}(.;\sigma^2)$ has two positive zeros and $\sigma^2<\operatorname{Var}(Y)$
 
-Assume that $M_Y$ is a smooth function and that $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$ and that for any $\sigma^2\in \left(0,\operatorname{Var}[Y]\right)$, $g_Y''(.;\sigma^2)$ has exactly two zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $0<\lambda_1(\sigma)<\lambda_2(\sigma)$. Then, there is no solution to the set of equations $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$ and $\sigma^2\in \left(0,\operatorname{Var}[Y]\right)$.
+Assume that $M_Y$ is a smooth function and that $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$ and that for any $\sigma^2\in \left(0,\operatorname{Var}[Y]\right)$, $g_Y^{(2)}(.;\sigma^2)$ has exactly two zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $0<\lambda_1(\sigma)<\lambda_2(\sigma)$. Then, there is no solution to the set of equations $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$ and $\sigma^2\in \left(0,\operatorname{Var}[Y]\right)$.
 
 A similar result holds on $\mathbb{R}_-^*$.
 :::
 
 
-**Proof of @lem-numberA2.** For any $\sigma^2<\operatorname{Var}[Y]$, we have that $g_Y(\lambda\sigma^2)=(\sigma^2-\operatorname{Var}[Y])\lambda^2+o(\lambda^2)$ when $\lambda\to 0_+$. Thus, $g_Y(.;\sigma^2)$ is locally concave and negative around $\lambda=0_+$. Since $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$, we know that $g_Y(.;\sigma^2)$ is locally convex and positive when $\lambda\to +\infty$. Since $g_Y''(.;\sigma^2)$ is assumed to have exactly two positive zeros $\lambda_1(\sigma)<\lambda_2(\sigma)$, we may only have the following cases:
+**Proof of @lem-numberA2.** For any $\sigma^2<\operatorname{Var}[Y]$, we have that $g_Y(\lambda\sigma^2)=(\sigma^2-\operatorname{Var}[Y])\lambda^2+o(\lambda^2)$ when $\lambda\to 0_+$. Thus, $g_Y(.;\sigma^2)$ is locally concave and negative around $\lambda=0_+$. Since $M_Y(\lambda)\overset{\lambda\to \pm\infty}{=}o(\lambda^2)$, we know that $g_Y(.;\sigma^2)$ is locally convex and positive when $\lambda\to +\infty$. Since $g_Y^{(2)}(.;\sigma^2)$ is assumed to have exactly two positive zeros $\lambda_1(\sigma)<\lambda_2(\sigma)$, we may only have the following cases:
 
-- $g''_Y(.;\sigma^2)$ is negative on $(0,\lambda_1(\sigma))$ and changes sign at $\lambda_1(\sigma)$. Thus, it is positive on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and cannot change sign at $\lambda_2(\sigma)$ to remain positive at $+\infty$. Hence, $g''_Y(.;\sigma^2)$ is positive on $(\lambda_1(\sigma),\lambda_2(\sigma))\cup (\lambda_2(\sigma),+\infty)$. Consequently, $g'_Y(.;\sigma^2)$ is decreasing on $(0,\lambda_1(\sigma))$ and increasing on $(\lambda_1(\sigma),+\infty)$. Since $g'_Y(0;\sigma^2)$, we have $g'_Y(\lambda_1(\sigma);\sigma^2)<0$ and since $g'_Y(+\infty;\sigma^2)=+\infty$, $g'_Y$ has only one zero $\lambda_0(\sigma)$ on $\mathbb{R}_+^*$ that satisfies $\lambda_0(\sigma)>\lambda_1(\sigma)$. Moreover, $g'_Y(.;\sigma^2)$ is negative on $(0,\lambda_0(\sigma))$ and positive on $(\lambda_0(\sigma),+\infty)$. Hence, $g_Y(.;\sigma^2)$ is decreasing on $(0,\lambda_0(\sigma))$ and increasing on $(\lambda_1(\sigma),+\infty)$. Since $g_Y(0;\sigma^2)=0$ and $g_Y(+\infty;\sigma^2)=+\infty$, $g_Y$ admits a unique zero $\lambda_*(\sigma)$ on $\mathbb{R}_+^*$ and we have $\lambda_*(\sigma)>\lambda_0(\sigma)$. Hence, there are no simultaneous solutions to $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$.
-- $g''_Y(.;\sigma^2)$ is negative on $(0,\lambda_1(\sigma))$ and does not change sign at $\lambda_1(\sigma)$ so it is negative on $(0,\lambda_2(\sigma))$. In order to be positive at $\lambda\to +\infty$, $g_Y''(.;\sigma^2)$ must change sign at $\lambda=\lambda_2(\sigma)$. Thus, $g_Y'(.;\sigma^2)$ is decreasing on $(0,\lambda_2(\sigma))$ and increasing on $(\lambda_2(\sigma),+\infty)$. Since $g_Y'(0;\sigma^2)=0$ and $g_Y'(+\infty;\sigma^2)=+\infty$, $g_Y'(.;\sigma^2)$ admits a unique zero $\lambda_0(\sigma)$ on $\mathbb{R}_+^*$ and it satisfies $\lambda_0(\sigma)>\lambda_2(\sigma)$. Moreover, $g_Y'(.;\sigma^2)$ is negative on $(0,\lambda_0(\sigma))$ and positive on $(\lambda_0(\sigma),+\infty)$. Since $g_Y(0;\sigma^2)=0$ and $g_Y(+\infty;\sigma^2)=+\infty$, $g_Y(.,\sigma^2)$ is decreasing and negative on $(0,\lambda_0(\sigma))$ and increasing on $(\lambda_0(\sigma),+\infty)$. Hence, $g_Y(.;\sigma^2)$ admits a unique zero $\lambda_*(\sigma)$ on $\mathbb{R}_+^*$ and we have $\lambda_*(\sigma)>\lambda_0(\sigma)$. Hence, there are no simultaneous solutions to $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$.
+- $g^{(2)}_Y(.;\sigma^2)$ is negative on $(0,\lambda_1(\sigma))$ and changes sign at $\lambda_1(\sigma)$. Thus, it is positive on $(\lambda_1(\sigma),\lambda_2(\sigma))$ and cannot change sign at $\lambda_2(\sigma)$ to remain positive at $+\infty$. Hence, $g^{(2)}_Y(.;\sigma^2)$ is positive on $(\lambda_1(\sigma),\lambda_2(\sigma))\cup (\lambda_2(\sigma),+\infty)$. Consequently, $g'_Y(.;\sigma^2)$ is decreasing on $(0,\lambda_1(\sigma))$ and increasing on $(\lambda_1(\sigma),+\infty)$. Since $g'_Y(0;\sigma^2)$, we have $g'_Y(\lambda_1(\sigma);\sigma^2)<0$ and since $g'_Y(+\infty;\sigma^2)=+\infty$, $g'_Y$ has only one zero $\lambda_0(\sigma)$ on $\mathbb{R}_+^*$ that satisfies $\lambda_0(\sigma)>\lambda_1(\sigma)$. Moreover, $g'_Y(.;\sigma^2)$ is negative on $(0,\lambda_0(\sigma))$ and positive on $(\lambda_0(\sigma),+\infty)$. Hence, $g_Y(.;\sigma^2)$ is decreasing on $(0,\lambda_0(\sigma))$ and increasing on $(\lambda_1(\sigma),+\infty)$. Since $g_Y(0;\sigma^2)=0$ and $g_Y(+\infty;\sigma^2)=+\infty$, $g_Y$ admits a unique zero $\lambda_*(\sigma)$ on $\mathbb{R}_+^*$ and we have $\lambda_*(\sigma)>\lambda_0(\sigma)$. Hence, there are no simultaneous solutions to $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$.
+- $g^{(2)}_Y(.;\sigma^2)$ is negative on $(0,\lambda_1(\sigma))$ and does not change sign at $\lambda_1(\sigma)$ so it is negative on $(0,\lambda_2(\sigma))$. In order to be positive at $\lambda\to +\infty$, $g_Y^{(2)}(.;\sigma^2)$ must change sign at $\lambda=\lambda_2(\sigma)$. Thus, $g_Y'(.;\sigma^2)$ is decreasing on $(0,\lambda_2(\sigma))$ and increasing on $(\lambda_2(\sigma),+\infty)$. Since $g_Y'(0;\sigma^2)=0$ and $g_Y'(+\infty;\sigma^2)=+\infty$, $g_Y'(.;\sigma^2)$ admits a unique zero $\lambda_0(\sigma)$ on $\mathbb{R}_+^*$ and it satisfies $\lambda_0(\sigma)>\lambda_2(\sigma)$. Moreover, $g_Y'(.;\sigma^2)$ is negative on $(0,\lambda_0(\sigma))$ and positive on $(\lambda_0(\sigma),+\infty)$. Since $g_Y(0;\sigma^2)=0$ and $g_Y(+\infty;\sigma^2)=+\infty$, $g_Y(.,\sigma^2)$ is decreasing and negative on $(0,\lambda_0(\sigma))$ and increasing on $(\lambda_0(\sigma),+\infty)$. Hence, $g_Y(.;\sigma^2)$ admits a unique zero $\lambda_*(\sigma)$ on $\mathbb{R}_+^*$ and we have $\lambda_*(\sigma)>\lambda_0(\sigma)$. Hence, there are no simultaneous solutions to $g_Y(\lambda;\sigma^2)=0=g_Y'(\lambda;\sigma^2)$ with $\lambda>0$.
 
 
 
@@ -703,7 +703,7 @@ In this section we prove @thm-regime1 and @lem-lambda-ordering.
 Let us first observe that $\left(2\lambda_0,\sigma_{\mathrm{opt}}^2\right)=\left(-\ln\frac{p_2}{p_1},\sigma_{\mathrm{opt}}^2\right)$ is a solution $(\lambda,\sigma^2)$ of the system of equations
 $$g_{\sigma,p_1,p_2}(\lambda)=0 \text{ and } g'_{\sigma,p_1,p_2}(\lambda) = 0.$$
 Moreover, the case $p_3\leq 4\sqrt{p_1p_2}$ is equivalent to the fact that $\Delta\leq 0$ or $\Delta>0$ with $P$ admitting two strictly negative roots (the sum of roots ($X_1,X_2)$ is $X_1+X_2 = \frac{p_3^2-8p_1p_2}{p_2p_3} < 0$ and the product of roots $X_1 X_2 = \frac{p_1}{p_2}>0$). Thus, the function $N_{p_1,p_2}$ is strictly positive on $\mathbb{R}$. Consequently, $g^{(3)}_{\sigma,p_1,p_2}$ and $u_1(\lambda)$ share the same sign and hence $g_{\sigma,p_1,p_2}^{(3)}$ is strictly negative on $(-\infty,\lambda_0)$ and strictly positive on $(\lambda_{0}, +\infty)$. Furthermore, since $\lim_{\lambda\to \pm \infty} g^{(2)}_{\sigma,p_1,p_2}(\lambda)=\sigma^2$, it follows that $\lambda_0$ is a global minimum of $g^{(2)}_{\sigma,p_1,p_2}$ with value $g^{(2)}_{\sigma,p_1,p_2}(\lambda_{0})=\sigma^2-\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$. If $\sigma^2\geq\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ is non-negative on $\mathbb{R}$ and so $g'_{\sigma,p_1,p_2}$ is a strictly increasing function. Since $g'_{\sigma,p_1,p_2}(0)=0$, $g'_{\sigma,p_1,p_2}$ is negative on $\mathbb{R}_-$ and positive on $\mathbb{R}_+$ and finally $g_{\sigma,p_1,p_2}$ has a global minimum at $\lambda=0$ which is precisely null so it is positive and $\sigma^2$ is a variance proxy. This gives that $\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$ is an upper bound for the optimal variance proxy. 
-On the contrary, if $\sigma^2<\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ has two distinct zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $\lambda_1(\sigma)<\lambda_0<\lambda_2(\sigma)\leq 0$. Moreover, since $g_{\sigma,p_1,p_2}''(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$, we get that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is always positive on $\mathbb{R}_+^*$ for any $\sigma^2\in \left(\operatorname{Var}[Y],\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}} \right)$. Since, we have observed that the equations $g_{\sigma,p_1,p_2}(\lambda,\sigma^2)=0=g_{\sigma,p_1,p_2}'(\lambda,\sigma^2)$ admits $\left(2\lambda_0,\frac{2(p_2-p_1)}{\ln(p_2/p_1)}\right)\in \mathbb{R}_-^*\times \left(\operatorname{Var}[Y],+\infty\right)$ as solution, application of @prp-LemmaMerged on $\mathbb{R}_-^*$ implies that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is non-negative on $\mathbb{R}_-$ if and only if $\sigma^2\geq \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. Thus the optimal variance proxy in this case is $\sigma_{\mathrm{opt}}^2= \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. 
+On the contrary, if $\sigma^2<\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ has two distinct zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $\lambda_1(\sigma)<\lambda_0<\lambda_2(\sigma)\leq 0$. Moreover, since $g_{\sigma,p_1,p_2}^{(2)}(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$, we get that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is always positive on $\mathbb{R}_+^*$ for any $\sigma^2\in \left(\operatorname{Var}[Y],\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}} \right)$. Since, we have observed that the equations $g_{\sigma,p_1,p_2}(\lambda,\sigma^2)=0=g_{\sigma,p_1,p_2}'(\lambda,\sigma^2)$ admits $\left(2\lambda_0,\frac{2(p_2-p_1)}{\ln(p_2/p_1)}\right)\in \mathbb{R}_-^*\times \left(\operatorname{Var}[Y],+\infty\right)$ as solution, application of @prp-LemmaMerged on $\mathbb{R}_-^*$ implies that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is non-negative on $\mathbb{R}_-$ if and only if $\sigma^2\geq \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. Thus the optimal variance proxy in this case is $\sigma_{\mathrm{opt}}^2= \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. 
 
 
 **Proof of @lem-lambda-ordering.**
