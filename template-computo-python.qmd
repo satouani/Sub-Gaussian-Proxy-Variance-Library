@@ -5,14 +5,14 @@ The sub-Gaussian property, first characterized by @Kahane1960PropritsLD and
 behavior of random variables. Since these pioneering works, this property has
 emerged as a fundamental concept in probability theory due to its profound
 implications in various mathematical disciplines, such as concentration
-inequalities inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration]
+inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration]
 and Bayesian statistics @catoni2007pac. In machine learning, sub-Gaussian
 tails play a crucial role in bandit algorithms @zhou2025logarithmic, in the
 study of the singular values of random matrices @rudelson2010non, and in
 Bayesian neural networks @vladimirova2019understanding and @vladimirova2020sub.
 
 ::: {#def-subgaussian}
-## Definition Sub-Gaussian variables
+## Sub-Gaussian variables
 
 A random variable $X$ with finite mean $\mu = \mathbb{E}[X]$ is *sub-Gaussian* if there exists a constant $\sigma^2 > 0$ such that $\mathbb{E}[\exp(\lambda (X - \mu))] \le \exp(\lambda^2 \sigma^2 / 2)$ for all $\lambda \in \mathbb{R}$. Such a constant $\sigma^2$ is called a *variance proxy*, and we say that $X$ is $\sigma^2$-sub-Gaussian. The *optimal variance proxy* is defined as $\sigma^2_{\mathrm{opt}}(X) = \inf \{ \sigma^2 > 0 : X \text{ is } \sigma^2\text{-sub-Gaussian} \}$. A variance proxy is always lower bounded by the variance, as shown by a Taylor expansion of the moment-generating function. When $\sigma^2_{\mathrm{opt}}(X) = \mathrm{Var}[X]$, $X$ is called *strictly sub-Gaussian*.
 :::
@@ -27,8 +27,8 @@ and combinatorial stochastic processes, their sub-Gaussianity remains largely
 underexplored.
 
 The first known result on discrete distributions covers the Bernoulli
-distribution, the simplest discrete distribution, supported on two points,
-or atoms, $1$ and $0$, with masses $p$ and $1-p$. @Kearns1998LargeDM derived
+distribution, the simplest discrete distribution, supported on two atoms,
+$1$ and $0$, with masses $p$ and $1-p$. @Kearns1998LargeDM derived
 the following “exquisitely delicate inequality”, quoting
 @berend2013concentration, for the Bernoulli moment-generating function:
 
@@ -68,18 +68,18 @@ characterization yields a practical computational procedure via critical points
 identification and equation solving, enabling explicit computation of the
 optimal variance proxy (@thm-GeneralCharac). These results are made even
 more precise when the number of critical points is at most two (
-@prp-g2zeros and @prp-LemmaMerged). We then apply this approach with a focus on discrete distributions. We start in
-We start in Section \ref{sec-3-mass}.with 3-point distributions, both symmetric and asymmetric, extending
+@prp-g2zeros and @prp-LemmaMerged). We then apply this approach with a focus on discrete distributions. We start
+in Section \ref{sec-3-mass}.with 3-point distributions, both symmetric and asymmetric, extending
 the classical Bernoulli case. In the symmetric setting, @thm-TheoSymmetric3mass uncovers a phase transition: for probabilities
 $p \geq \frac{1}{6}$, strict sub-Gaussianity holds, whereas for
 $p < \frac{1}{6}$, it does not, and we derive an explicit characterization of
 the optimal proxy through a pair of solvable equations. In the asymmetric case,
 we delineate two regimes depending on the relationship between the central mass
 and the edge probabilities, and in one of these, we provide a closed-form
-expression for the optimal proxy (@thm-TheoRegime2). We establish in \ref{sec-uniform} that discrete uniform distribution over $N$ equally
+expression for the optimal proxy (@thm-TheoRegime2). We establish in Section \ref{sec-uniform} that discrete uniform distribution over $N$ equally
 spaced points is strictly sub-Gaussian for all $N \geq 2$, using a moment-based
 analysis of the exponential family induced by the log-partition function
-(@thm-discrete-distribution). Finally, we describe in \ref{sec-software} the computational framework we developed
+(@thm-discrete-distribution). Finally, we describe in Section \ref{sec-software} the computational framework we developed
 to support reproducibility, providing an open-source Python package that
 combines analytical and numerical approaches to compute optimal sub-Gaussian
 variance proxies across a wide range of distributions.
@@ -165,11 +165,11 @@ $\lim_{\lambda\to \pm\infty} g''_Y(\lambda;\sigma^2) = \sigma^2$.
 ::: {#fig-ImageTheorem2}
 ![](figures/illustration_thm21.pdf){width=100%}
 
-illustration of @thm-GeneralCharac with parameters
+Illustration of @thm-GeneralCharac with parameters
 $p_1 = 0.05$ and $p_2 = 0.01$ (see Section \ref{subsec-asymmthreepoints}.
 The black curve represents the function
 $\lambda \mapsto \lambda M_Y'(\lambda) - 2 M_Y(\lambda)$
-of Equation @eq-sys-eq.
+of @eq-sys-eq.
 The green/red box plots represent the local behavior of
 $\lambda \mapsto g_Y\!\left(\lambda;\sigma^2 = \frac{M_Y'(\lambda^*)}{\lambda^*}\right)$
 at each zero $\lambda^*$ of the black curve to decide whether $\lambda^*$ is a
@@ -237,7 +237,7 @@ very few elements or when these elements can be explicitly expressed in
 closed-forms.
 :::
 
-The main numerical and theoretical difficulty to study elements of
+The main numerical and theoretical difficulty in studying elements of
 $\mathcal{L}_c^*$ is the fact that they must be local minima of
 $g_Y(.;\sigma^2)$. This property is tricky to verify because the second
 derivative may also vanish at these points, making the analysis complicated.
@@ -349,7 +349,7 @@ g_{\sigma,p}(\lambda)
 $$
 
 Since $g_{\sigma,p}$ is an even function of $\lambda$, we only need to prove
-former inequality for $\lambda\geq 0$.
+the inequality above for $\lambda\geq 0$.
 The general theory implies that $\operatorname{Var}[Y]=2p$ is a lower bound for the
 optimal variance proxy. Consequently, we shall only consider $\sigma^2\geq 2p$.
 
@@ -375,7 +375,7 @@ g^{(3)}_{\sigma,p}(\lambda)
 {(2p\cosh\lambda+1-2p)^3}.
 \end{aligned}
 $$
-Let us now observe that for all $\lambda \in \mathbb{R}$,
+Observe that for all $\lambda \in \mathbb{R}$,
 $N_p(\lambda) := 4p^2 + 4p - 1 + 2p(1-2p)\cosh \lambda \geq 1$, and that 
 $g^{(3)}_{\sigma,p}(0)=0$; thus, $g^{(3)}_{\sigma,p}$ and $N_p$ have the
 same sign on $\mathbb{R}_+$; since $N_p'(\lambda) = 2p(1-2p)\sinh \lambda$,
@@ -392,7 +392,7 @@ In this case, $N_p$ is a positive function on $\mathbb{R}_+$ and so is $g^{(3)}_
 $$\sigma_{1}^2(p):=\frac{(1-2p)^2}{4(1-4p)}.$$ {#eq-sigma1}
 Consequently $\sigma^2=2p$ is no longer a variance proxy because $g'_{\sigma,p}$ would become strictly decreasing on $(0,\lambda_0)$ and thus strictly negative on this interval (because $g'_{\sigma,p}(0)=0$) and so $g_{\sigma,p}$ would be negative on $(0,\lambda_0)$ (again because $g_{\sigma,p}(0)=0)$. This proves that for $p<\frac{1}{6}$, $Y$ is not strictly sub-Gaussian.
 
-Let us be more precise in the case $p<\frac{1}{6}$. As mentioned above, we shall now only consider $2p<\sigma^2<\frac{(1-2p)^2}{4(1-4p)}$. The previous analysis implies that there exists a unique pair $(\lambda_1,\lambda_2)$ such that $0<\lambda_1<\lambda_0<\lambda_2$ and $g_{\sigma,p}^{(2)}(\lambda_1)=g_{\sigma,p}^{(2)}(\lambda_2)=0$. Moreover, $g_{\sigma,p}^{(2)}$ is strictly positive on $(0,\lambda_1)\cup(\lambda_2,+\infty)$ and strictly negative on $(\lambda_1,\lambda_2)$. 
+We now analyze the case $p<\frac{1}{6}$. As mentioned above, we shall now only consider $2p<\sigma^2<\frac{(1-2p)^2}{4(1-4p)}$. The previous analysis implies that there exists a unique pair $(\lambda_1,\lambda_2)$ such that $0<\lambda_1<\lambda_0<\lambda_2$ and $g_{\sigma,p}^{(2)}(\lambda_1)=g_{\sigma,p}^{(2)}(\lambda_2)=0$. Moreover, $g_{\sigma,p}^{(2)}$ is strictly positive on $(0,\lambda_1)\cup(\lambda_2,+\infty)$ and strictly negative on $(\lambda_1,\lambda_2)$. 
 Note that we have explicitly:
 $$
 \begin{aligned}
