@@ -9,7 +9,7 @@ Institut Universitaire de France, Les Forges 2, 20 Rue du Dr Annino, 42000 Saint
 
 ### Abstract
 
-We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied Bernoulli case. We also prove that the discrete uniform distribution over  points is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions.
+We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied Bernoulli case. We also prove that the discrete uniform distribution is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions.
 
 ---
 
