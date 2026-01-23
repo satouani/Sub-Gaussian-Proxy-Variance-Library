@@ -36,7 +36,7 @@ date-modified: last-modified
 #   For a detailed, step-by-step guide on preparing your article, setting up the continuous integration and submitting it to Computo, please consult the [guidelines for authors](https://computo-journal.org/site/guidelines-authors.html).
 abstract: >+
  We investigate the problem of characterizing the optimal variance proxy for sub-Gaussian random variables. We apply a general characterization method to discrete random variables with equally spaced atoms. We thoroughly study 3-mass distributions, thereby generalizing the well-studied Bernoulli case. We also prove that the discrete uniform distribution is strictly sub-Gaussian. Finally, we provide an open-source Python package that combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions
-keywords: [Sub-Gaussian property, 3-mass distributions, Uniform distribution]
+keywords: [Sub-Gaussian property, discrete distributions, Uniform distribution]
 bibliography: references.bib
 github-user: satouani
 repo: "Sub-Gaussian-Proxy-Variance-Library.git"
