@@ -2,10 +2,10 @@
 
 ### Authors
 
-* [**Soufiane Atouani**](https://www.linkedin.com/in/soufiane-atouani-93722a15b/) Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
-* [**Olivier Marchal**](https://math.univ-lyon1.fr/~marchal/index.html) Université Jean Monnet Saint-Étienne, CNRS, Institut Camille Jordan UMR 5208
+* [Soufiane Atouani](https://www.linkedin.com/in/soufiane-atouani-93722a15b/), Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
+* [Olivier Marchal](https://math.univ-lyon1.fr/~marchal/index.html), Université Jean Monnet Saint-Étienne, CNRS, Institut Camille Jordan UMR 5208
 Institut Universitaire de France, Les Forges 2, 20 Rue du Dr Annino, 42000 Saint-Étienne, France
-* [**Julyan Arbel**](https://www.julyanarbel.com/) Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
+* [Julyan Arbel](https://www.julyanarbel.com/), Université Grenoble Alpes, Inria, CNRS, Grenoble INP, LJK, 38000 Grenoble, France
 
 ### Abstract
 
@@ -69,7 +69,7 @@ The script compares `SubGaussian3MassAsymmetricProxy` and `SubGaussian3MassSymme
 
 ### 2. Beta & Bernoulli Reproduction
 
-Reproduces Figure 1 from *Marchal and Arbel (2017)*, comparing the optimal proxy for Beta distributions against the Bernoulli case and the theoretical upper bound:
+Reproduces Figure 1 from [Marchal and Arbel (2017)](https://projecteuclid.org/journals/electronic-communications-in-probability/volume-22/issue-none/On-the-sub-Gaussianity-of-the-Beta-and-Dirichlet-distributions/10.1214/17-ECP92.full), comparing the optimal proxy for Beta distributions against the Bernoulli case and the theoretical upper bound.
 
 
 ### 3. 3-Mass Stability Sweep
