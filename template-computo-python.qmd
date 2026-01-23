@@ -6,10 +6,10 @@ behavior of random variables. Since these pioneering works, this property has
 emerged as a fundamental concept in probability theory due to its profound
 implications in various mathematical disciplines, such as concentration
 inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration]
-and Bayesian statistics @catoni2007pac. In machine learning, sub-Gaussian
-tails play a crucial role in bandit algorithms @zhou2025logarithmic, in the
-study of the singular values of random matrices @rudelson2010non, and in
-Bayesian neural networks @vladimirova2019understanding and @vladimirova2020sub.
+and Bayesian statistics [@catoni2007pac]. In machine learning, sub-Gaussian
+tails play a crucial role in bandit algorithms [@zhou2025logarithmic], in the
+study of the singular values of random matrices [@rudelson2010non], and in
+Bayesian neural networks [@vladimirova2019understanding; @vladimirova2020sub].
 
 ::: {#def-subgaussian}
 ## Sub-Gaussian variables
@@ -17,7 +17,7 @@ Bayesian neural networks @vladimirova2019understanding and @vladimirova2020sub.
 A random variable $X$ with finite mean $\mu = \mathbb{E}[X]$ is *sub-Gaussian* if there exists a constant $\sigma^2 > 0$ such that $\mathbb{E}[\exp(\lambda (X - \mu))] \le \exp(\lambda^2 \sigma^2 / 2)$ for all $\lambda \in \mathbb{R}$. Such a constant $\sigma^2$ is called a *variance proxy*, and we say that $X$ is $\sigma^2$-sub-Gaussian. The *optimal variance proxy* is defined as $\sigma^2_{\mathrm{opt}}(X) = \inf \{ \sigma^2 > 0 : X \text{ is } \sigma^2\text{-sub-Gaussian} \}$. A variance proxy is always lower bounded by the variance, as shown by a Taylor expansion of the moment-generating function. When $\sigma^2_{\mathrm{opt}}(X) = \mathrm{Var}[X]$, $X$ is called *strictly sub-Gaussian*.
 :::
 
-Extensive research on optimal variance proxy has focused on continuous
+Research on optimal variance proxies has focused on continuous
 distributions such as Beta and Dirichlet distributions
 [@marchal2017sub], other bounded support distributions such as Kumaraswamy
 and triangular distributions [@arbel2020strict], as well as truncated
@@ -39,7 +39,7 @@ $$
 \frac{1-2p}{4\ln((1-p)/p)}\lambda^2
 \right),
 \quad
-p\in[0,1],\ \lambda\in\mathbb{R}.
+p\in[0,1],\ \lambda\in\mathbb{R},
 $$ {#eq-KS}
 
 which is tight and thus implies an optimal variance proxy of
@@ -69,7 +69,7 @@ identification and equation solving, enabling explicit computation of the
 optimal variance proxy (@thm-GeneralCharac). These results are made even
 more precise when the number of critical points is at most two (
 @prp-g2zeros and @prp-LemmaMerged). We then apply this approach with a focus on discrete distributions. We start
-in Section \ref{sec-3-mass}.with 3-point distributions, both symmetric and asymmetric, extending
+in Section \ref{sec-3-mass} with 3-point distributions, both symmetric and asymmetric, extending
 the classical Bernoulli case. In the symmetric setting, @thm-TheoSymmetric3mass uncovers a phase transition: for probabilities
 $p \geq \frac{1}{6}$, strict sub-Gaussianity holds, whereas for
 $p < \frac{1}{6}$, it does not, and we derive an explicit characterization of
