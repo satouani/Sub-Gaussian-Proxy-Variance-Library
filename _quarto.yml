@@ -4,7 +4,7 @@ project:
     - template-computo-python.qmd
     #- README.qmd
 
-title: "Optimal sub-Gaussian variance proxy for 3-mass distributions"
+title: "Optimal sub-Gaussian constants for discrete noise models in learning"
 author:
   - name: Soufiane Atouani
     corresponding: true

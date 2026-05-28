@@ -1,57 +1,39 @@
 # Introduction {#s:1}
 
-The sub-Gaussian property, first characterized by @Kahane1960PropritsLD and
-@buldygin1980sub, has become a critical tool for understanding the tail
-behavior of random variables. Since these pioneering works, this property has
-emerged as a fundamental concept in probability theory due to its profound
-implications in various mathematical disciplines, such as concentration
-inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration]
-and Bayesian statistics [@catoni2007pac]. In machine learning, sub-Gaussian
-tails play a crucial role in bandit algorithms [@zhou2025logarithmic], in the
-study of the singular values of random matrices [@rudelson2010non], and in
-Bayesian neural networks [@vladimirova2019understanding; @vladimirova2020sub].
+A large fraction of theoretical guarantees in machine learning, including generalization bounds, regret bounds in online learning, and confidence intervals in bandit algorithms, rely on concentration inequalities for sums of random variables. In many of these results, randomness is controlled through a sub-Gaussian assumption, which provides exponential tail bounds with variance-like parameters. While this framework is remarkably general, the constants appearing in such bounds often play a crucial quantitative role, especially in non-asymptotic regimes, yet are frequently chosen in a conservative or distribution-agnostic manner.
+
+The sub-Gaussian property, first characterized by @Kahane1960PropritsLD and @buldygin1980sub, formalizes this notion of light-tailed behavior via moment-generating function control. Since these pioneering works, sub-Gaussianity has become a cornerstone of learning theory, underpinning concentration inequalities [@Hoeffding1963; @boucheron2003concentration; @raginsky2013concentration], regret analyses in stochastic bandits [@zhou2024towards], bounds on random matrix spectra [@rudelson2010non], and uncertainty quantification in Bayesian neural networks [@vladimirova2019understanding; @vladimirova2020sub].
 
 ::: {#def-subgaussian}
 ## Sub-Gaussian variables
 
-A random variable $X$ with finite mean $\mu = \mathbb{E}[X]$ is *sub-Gaussian* if there exists a constant $\sigma^2 > 0$ such that $\mathbb{E}[\exp(\lambda (X - \mu))] \le \exp(\lambda^2 \sigma^2 / 2)$ for all $\lambda \in \mathbb{R}$. Such a constant $\sigma^2$ is called a *variance proxy*, and we say that $X$ is $\sigma^2$-sub-Gaussian. The *optimal variance proxy* is defined as $\sigma^2_{\mathrm{opt}}(X) = \inf \{ \sigma^2 > 0 : X \text{ is } \sigma^2\text{-sub-Gaussian} \}$. A variance proxy is always lower bounded by the variance, as shown by a Taylor expansion of the moment-generating function. When $\sigma^2_{\mathrm{opt}}(X) = \mathrm{Var}[X]$, $X$ is called *strictly sub-Gaussian*.
+A random variable $X$ with finite mean $\mu = \mathbb{E}[X]$ is *sub-Gaussian* if there exists a constant $\sigma^2 > 0$ such that
+$$
+\mathbb{E}[\exp(\lambda (X - \mu))] \leq \exp(\lambda^2 \sigma^2/2)
+\quad \text{for all } \lambda \in \mathbb{R}.
+$$
+Such a constant $\sigma^2$ is called a *variance proxy*, and the smallest admissible value,
+$$
+\sigma^2_{\mathrm{opt}}(X) = \inf \left\{ \sigma^2 > 0 \;:\; X \text{ is } \sigma^2\text{-sub-Gaussian} \right\},
+$$
+is referred to as the *optimal variance proxy*. A variance proxy is always lower bounded by the variance, and when equality holds, i.e., $\sigma^2_{\mathrm{opt}}(X) = \mathrm{Var}[X]$, the random variable is said to be *strictly sub-Gaussian*.
 :::
 
-Research on optimal variance proxies has focused on continuous
-distributions such as Beta and Dirichlet distributions
-[@marchal2017sub], other bounded support distributions such as Kumaraswamy
-and triangular distributions [@arbel2020strict], as well as truncated
-Gaussian and exponential distributions [@barreto2024optimal]. Despite the
-prevalence of discrete distributions in modeling count data, binary outcomes,
-and combinatorial stochastic processes, their sub-Gaussianity remains largely
-underexplored.
+From a learning-theoretic perspective, the optimal variance proxy directly governs the tightness of concentration bounds and therefore affects learning rates, exploration bonuses, and confidence widths. Despite this importance, most existing results on optimal variance proxies focus on continuous distributions, including Beta and Dirichlet laws [@marchal2017sub], other bounded distributions such as Kumaraswamy and triangular distributions [@arbel2020strict], as well as truncated Gaussian and exponential models [@barreto2024optimal].
 
-The first known result on discrete distributions covers the Bernoulli
-distribution, the simplest discrete distribution, supported on two atoms,
-$1$ and $0$, with masses $p$ and $1-p$. @Kearns1998LargeDM derived
-the following “exquisitely delicate inequality”, quoting
-@berend2013concentration, for the Bernoulli moment-generating function:
-
+In contrast, discrete distributions, which naturally arise in learning from categorical data, discretized rewards, count observations, and combinatorial stochastic processes, remain comparatively underexplored from the viewpoint of optimal sub-Gaussian constants. The canonical example is the Bernoulli distribution. For a Bernoulli random variable supported on $\{0,1\}$ with parameter $p$, @Kearns1998LargeDM derived the following tight inequality for the moment-generating function:
 $$
-(1-p)e^{-\lambda p}+pe^{\lambda(1-p)}
-\le
-\exp\left(
-\frac{1-2p}{4\ln((1-p)/p)}\lambda^2
-\right),
-\quad
-p\in[0,1],\ \lambda\in\mathbb{R},
+(1-p)e^{-\lambda p}+pe^{\lambda(1-p)}\leq\exp\left(\frac{1-2p}{4\ln((1-p)/p)}\lambda^2\right),
+\quad p\in[0,1],\,\,\lambda\in\mathbb{R},
 $$ {#eq-KS}
+which yields an explicit expression for the optimal variance proxy. This result has important implications in learning theory, as it immediately transfers to binomial sums and empirical averages of Bernoulli observations.
 
-which is tight and thus implies an optimal variance proxy of
-$\frac{1-2p}{2\ln((1-p)/p)}$. This result also provides the optimal variance
-proxy for the binomial distribution which is written as an i.i.d. sum of
-Bernoulli random variables.
+A natural question is whether such sharp characterizations extend beyond the Bernoulli case. More generally, discrete observations in learning are often modeled by categorical distributions with multiple atoms, yet obtaining tight sub-Gaussian parameters for such distributions appears challenging in full generality. In this work, we take a step in this direction by studying discrete distributions with three equally spaced support points. This setting is the minimal non-Bernoulli discrete model exhibiting nontrivial sub-Gaussian behavior, including phase transitions between strict and non-strict sub-Gaussianity, and admits both symmetric and asymmetric configurations. To the best of our knowledge, the general $N$-mass case appears to be largely intractable, except for the uniform case that we analyze here (see @fig-distrib-plots).
 
-A natural generalization of the Bernoulli to more than two atoms is the
-categorical distribution with $N$ atoms $x_i$, $i\in\{1,\ldots,N\}$, and
-weights $\mathbb{P}(X=x_i)=p_i>0$, with $p_1+\cdots+p_N=1$. While a general
-treatment of $N$-mass categorical distributions seems intractable, we address
-the case of the 3-mass distribution when atoms are equally spaced.
+**Implications for learning and bandits.**
+Beyond their intrinsic probabilistic interest, the results of this paper have direct consequences for learning-theoretic guarantees that rely on concentration inequalities. In many learning problems, including empirical risk minimization and stochastic bandits, noise is modeled as sub-Gaussian with a variance proxy that is chosen conservatively, often ignoring the fine structure of the underlying distribution. Our results show that, for discrete observations with few support points, this variance proxy can be characterized exactly, and in several regimes coincides with the variance itself.
+
+As a concrete illustration, we show how the optimal sub-Gaussian variance proxies derived in this work can be plugged into standard confidence bounds for empirical means, leading to tighter confidence intervals for discrete-valued rewards. In the context of stochastic multi-armed bandits with discrete reward distributions, this yields sharper exploration bonuses and improved constants in regret bounds for classical algorithms, without altering their structure. This application highlights how refined probabilistic analysis of discrete noise models can translate into tangible improvements in learning-theoretic performance guarantees. Note that this refinement of the probabilistic layer underlying standard learning guarantees does not require algorithmic modifications.
 
 ::: {#fig-distrib-plots}
 ![](figures/distrib-plots.pdf){width=100%}
@@ -61,28 +43,11 @@ Probability mass function of the discrete distributions covered in the paper.
 
 **Contributions and outline.**
 
-We first provide in @sec-charac a characterization of the optimal sub-Gaussian
-variance proxy for random variables with bounded moment-generating functions,
-following a general methodology based on function variation analysis. This
-characterization yields a practical computational procedure via critical points
-identification and equation solving, enabling explicit computation of the
-optimal variance proxy (@thm-GeneralCharac). These results are made even
-more precise when the number of critical points is at most two (
-@prp-g2zeros and @prp-LemmaMerged). We then apply this approach with a focus on discrete distributions. We start
-in Section \ref{sec-3-mass} with 3-point distributions, both symmetric and asymmetric, extending
-the classical Bernoulli case. In the symmetric setting, @thm-TheoSymmetric3mass uncovers a phase transition: for probabilities
-$p \geq \frac{1}{6}$, strict sub-Gaussianity holds, whereas for
-$p < \frac{1}{6}$, it does not, and we derive an explicit characterization of
-the optimal proxy through a pair of solvable equations. In the asymmetric case,
-we delineate two regimes depending on the relationship between the central mass
-and the edge probabilities, and in one of these, we provide a closed-form
-expression for the optimal proxy (@thm-TheoRegime2). We establish in Section \ref{sec-uniform} that discrete uniform distribution over $N$ equally
-spaced points is strictly sub-Gaussian for all $N \geq 2$, using a moment-based
-analysis of the exponential family induced by the log-partition function
-(@thm-discrete-distribution). Finally, we describe in Section \ref{sec-software} the computational framework we developed
-to support reproducibility, providing an open-source Python package that
-combines analytical and numerical approaches to compute optimal sub-Gaussian
-variance proxies across a wide range of distributions.
+We first provide in @sec-charac a general characterization of the optimal sub-Gaussian variance proxy for random variables with bounded moment-generating functions. This characterization leads to a practical computational procedure based on the identification of critical points of an associated variational function (@thm-GeneralCharac) with refined results when the number of critical points is small (@prp-g2zeros and @prp-LemmaMerged).
+
+We then apply this framework to discrete distributions that naturally arise in learning-theoretic models. In @sec-3-mass, we analyze three-point distributions, extending the classical Bernoulli case. In the symmetric setting, @thm-TheoSymmetric3mass reveals a sharp phase transition: for probabilities $p \geq \frac{1}{6}$, the distribution is strictly sub-Gaussian, whereas for $p < \frac{1}{6}$ it is not, and the optimal variance proxy is characterized by an explicit system of equations. In the asymmetric case, we identify two regimes depending on the mass of the central atom, and derive closed-form expressions in one of them (@thm-regime1). In @sec-uniform, we further show that the discrete uniform distribution on $N$ equally spaced points is strictly sub-Gaussian for all $N \geq 2$.
+
+Finally, we describe in @sec-software the open-source Python package we developed to support reproducibility, which combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions, with direct applicability to learning-theoretic problems.
 
 # Characterization of optimal sub-Gaussian variance proxy {#sec-charac}
 
@@ -580,7 +545,7 @@ The proof of @thm-discrete-distribution is postponed to appendix @sec-appendix-p
 
 # Software implementation {#sec-software}
 
-To support reproducibility and facilitate the use of both state-of-the-art and our theoretical results, we developed a Python package^[The package is available at <https://github.com/jarbel/sub-Gaussian-implementation.git> with comprehensive documentation, installation instructions, and usage examples.] 
+To support reproducibility and facilitate the use of both state-of-the-art and our theoretical results, we developed a Python package^[The package is available at <https://github.com/jarbel/sub-Gaussian-implementation> with comprehensive documentation, installation instructions, and usage examples.] 
 to compute the optimal sub-Gaussian variance proxy for a wide range of probability distributions. The package handles both discrete and continuous distributions, including truncated Gaussian and Exponential laws.
 
 The implementation follows a unified principle. Whenever a closed-form expression is available, it is returned directly; this is the case for Bernoulli and Binomial distributions, uniform and discrete uniform distributions (see @thm-discrete-distribution), as well as certain symmetric families such as Beta, Kumaraswamy, Triangular [@arbel2020strict], or 3-mass distributions (see @thm-TheoSymmetric3mass). When no closed-form can be derived, the computation relies on the general characterizations of the optimal variance proxy given in @sec-charac (see also @arbel2020strict), and proceeds via numerical methods. In particular, an adaptive grid search is combined with robust root-finding algorithms such as Brent's method. This hybrid methodology ensures that both analytically tractable and intractable cases are encompassed within a single coherent framework.
@@ -589,7 +554,7 @@ The package primarily implements the characterization of the optimal variance pr
 $$
 g_Y(\lambda;\sigma^2)=0, \qquad g'_Y(\lambda;\sigma^2)=0,
 $$
-as stated in @thm-TheoRegime2. This characterization is particularly effective for discrete distributions with few support points, such as the 3-mass distribution, where it provides a tractable criterion for identifying candidate values of the variance proxy.
+as stated in @thm-GeneralCharac. This characterization is particularly effective for discrete distributions with few support points, such as the 3-mass distribution, where it provides a tractable criterion for identifying candidate values of the variance proxy.
 
 We also used this implementation to validate our theoretical results: the specialized method for the symmetric 3-mass case (see @thm-TheoSymmetric3mass) was checked against the asymmetric 3-mass case (see @thm-TheoRegime2) for the special scenario where $p_1 = p_2$, and both approaches produced identical results. This provides an additional consistency check between the theoretical framework and the numerical implementation.
 
@@ -703,7 +668,7 @@ In this section we prove @thm-regime1 and @lem-lambda-ordering.
 Let us first observe that $\left(2\lambda_0,\sigma_{\mathrm{opt}}^2\right)=\left(-\ln\frac{p_2}{p_1},\sigma_{\mathrm{opt}}^2\right)$ is a solution $(\lambda,\sigma^2)$ of the system of equations
 $$g_{\sigma,p_1,p_2}(\lambda)=0 \text{ and } g'_{\sigma,p_1,p_2}(\lambda) = 0.$$
 Moreover, the case $p_3\leq 4\sqrt{p_1p_2}$ is equivalent to the fact that $\Delta\leq 0$ or $\Delta>0$ with $P$ admitting two strictly negative roots (the sum of roots ($X_1,X_2)$ is $X_1+X_2 = \frac{p_3^2-8p_1p_2}{p_2p_3} < 0$ and the product of roots $X_1 X_2 = \frac{p_1}{p_2}>0$). Thus, the function $N_{p_1,p_2}$ is strictly positive on $\mathbb{R}$. Consequently, $g^{(3)}_{\sigma,p_1,p_2}$ and $u_1(\lambda)$ share the same sign and hence $g_{\sigma,p_1,p_2}^{(3)}$ is strictly negative on $(-\infty,\lambda_0)$ and strictly positive on $(\lambda_{0}, +\infty)$. Furthermore, since $\lim_{\lambda\to \pm \infty} g^{(2)}_{\sigma,p_1,p_2}(\lambda)=\sigma^2$, it follows that $\lambda_0$ is a global minimum of $g^{(2)}_{\sigma,p_1,p_2}$ with value $g^{(2)}_{\sigma,p_1,p_2}(\lambda_{0})=\sigma^2-\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$. If $\sigma^2\geq\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ is non-negative on $\mathbb{R}$ and so $g'_{\sigma,p_1,p_2}$ is a strictly increasing function. Since $g'_{\sigma,p_1,p_2}(0)=0$, $g'_{\sigma,p_1,p_2}$ is negative on $\mathbb{R}_-$ and positive on $\mathbb{R}_+$ and finally $g_{\sigma,p_1,p_2}$ has a global minimum at $\lambda=0$ which is precisely null so it is positive and $\sigma^2$ is a variance proxy. This gives that $\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$ is an upper bound for the optimal variance proxy. 
-On the contrary, if $\sigma^2<\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ has two distinct zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $\lambda_1(\sigma)<\lambda_0<\lambda_2(\sigma)\leq 0$. Moreover, since $g_{\sigma,p_1,p_2}^{(2)}(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$, we get that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is always positive on $\mathbb{R}_+^*$ for any $\sigma^2\in \left(\operatorname{Var}[Y],\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}} \right)$. Since, we have observed that the equations $g_{\sigma,p_1,p_2}(\lambda,\sigma^2)=0=g_{\sigma,p_1,p_2}'(\lambda,\sigma^2)$ admits $\left(2\lambda_0,\frac{2(p_2-p_1)}{\ln(p_2/p_1)}\right)\in \mathbb{R}_-^*\times \left(\operatorname{Var}[Y],+\infty\right)$ as solution, application of @prp-LemmaMerged on $\mathbb{R}_-^*$ implies that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is non-negative on $\mathbb{R}_-$ if and only if $\sigma^2\geq \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. Thus the optimal variance proxy in this case is $\sigma_{\mathrm{opt}}^2= \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. 
+On the contrary, if $\sigma^2<\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}}$, then $g^{(2)}_{\sigma,p_1,p_2}$ has two distinct zeros $(\lambda_1(\sigma),\lambda_2(\sigma))$ such that $\lambda_1(\sigma)<\lambda_0<\lambda_2(\sigma)\leq 0$. Moreover, since $g_{\sigma,p_1,p_2}^{(2)}(.;\sigma^2)$ is positive on $\mathbb{R}_+^*$, we get that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is always positive on $\mathbb{R}_+^*$ for any $\sigma^2\in \left(\operatorname{Var}[Y],\frac{2\sqrt{p_1p_2}}{p_3+2\sqrt{p_1p_2}} \right)$. Since, we have observed that the equations $g_{\sigma,p_1,p_2}(\lambda,\sigma^2)=0=g_{\sigma,p_1,p_2}'(\lambda,\sigma^2)$ admits $\left(2\lambda_0,\frac{2(p_2-p_1)}{\ln(p_2/p_1)}\right)\in \mathbb{R}_-^*\times \left(\operatorname{Var}[Y],+\infty\right)$ as solution. Application of @prp-LemmaMerged on $\mathbb{R}_-^*$ implies that $g_{\sigma,p_1,p_2}(.;\sigma^2)$ is non-negative on $\mathbb{R}_-$ if and only if $\sigma^2\geq \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. Thus the optimal variance proxy in this case is $\sigma_{\mathrm{opt}}^2= \frac{2(p_2-p_1)}{\ln(p_2/p_1)}$. 
 
 
 **Proof of @lem-lambda-ordering.**
@@ -864,6 +829,7 @@ $$
 $$
 Hence, for any $\sigma^2 \geq \operatorname{Var}[Y]$, we have $g_{\sigma,N}^{(2)}(\lambda) = \sigma^2 - \operatorname{Var}[Z_\lambda] \geq 0$, with equality if and only if $\lambda = 0$. Finally for any $\sigma^2 \geq \operatorname{Var}[Y]$, given that $g_{\sigma,N}^{(2)}(\lambda)$ has no solution on $\mathbb{R}^*_+ \text{ and } \mathbb{R}^*_-$, it follows from @prp-g2zeros that $g_{\sigma,N}$ is non-negative on $\mathbb{R}$. 
 This shows that $Y$ is strictly sub-Gaussian ending the proof.
+:::
 
 # References {.unnumbered}
 
