@@ -162,7 +162,7 @@ def is_local_minimum(lam_c, p1, p2, eps=0.3, n=500):
 # FIGURE 2 — Computation
 # ─────────────────────────────────────────────────────────────
 
-def compute_figure2(p1=0.05, p2=0.01, lam_min=-6.5, lam_max=10.5, n_pts=60_000):
+def compute_figure2(p1=0.05, p2=0.01, lam_min=-7.0, lam_max=11.5, n_pts=60_000):
     """Compute zeros of the non-centered F and classify them as local minima."""
     p3 = 1 - p1 - p2
     def _u0(l): return p1*np.exp(-l) + p2*np.exp(l) + p3
@@ -188,12 +188,13 @@ def compute_figure2(p1=0.05, p2=0.01, lam_min=-6.5, lam_max=10.5, n_pts=60_000):
         ls = np.linspace(z - eps, z + eps, 500)
         return bool(np.min(np.vectorize(lambda l: _gY(l, _sc(z)))(ls)) >= -1e-6)
 
-    colors = ["green" if _is_min(z) else "red" for z in zeros]
+    colors = ["#448C2A" if _is_min(z) else "#A32920" for z in zeros]
 
     return {
         "lams": lams, "fvals": fvals,
         "zeros": zeros, "sc_vals": sc_vals, "colors": colors,
         "var_Y": p1 + p2 - (p2 - p1)**2,
+        "p1": p1, "p2": p2,
     }
 
 
@@ -203,38 +204,136 @@ def plot_figure2(data=None, save=True):
     lams_main = data["lams"]
     fvals     = data["fvals"]
     zeros     = data["zeros"]
+    sc_vals   = data["sc_vals"]
     colors    = data["colors"]
+    var_Y     = data["var_Y"]
+    p1        = data["p1"]
+    p2        = data["p2"]
+    p3        = 1 - p1 - p2
 
     print(f"Zeros of F_alt: {[f'{z:.4f}' for z in zeros]}")
-    print(f"sc values:      {[f'{s:.4f}' for s in data['sc_vals']]}")
+    print(f"sc values:      {[f'{s:.4f}' for s in sc_vals]}")
 
-    fig = plt.figure(figsize=(13, 6.5))
-    ax = fig.add_axes([0.07, 0.12, 0.90, 0.82])
+    def u0(lam): return p1*np.exp(-lam) + p2*np.exp(lam) + p3
+    def gY_alt(lam, sigma2): return 0.5 * lam**2 * sigma2 - np.log(u0(lam))
+
+    plt.rcParams.update({"text.usetex": False, "font.family": "serif", "font.size": 11})
+
+    fig, ax = plt.subplots(figsize=(13, 7.5))
 
     ax.plot(lams_main, fvals, "k-", linewidth=2.2, zorder=3)
-    ax.axhline(0, color="k", linewidth=0.9)
-    ax.axvline(0, color="k", linewidth=0.5, alpha=0.3)
 
-    # Mark zeros on x-axis
-    for z in zeros:
-        ax.scatter([z], [0], color="k", s=60, zorder=6)
+    ax.spines['left'].set_position('zero')
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.spines['bottom'].set_color('#666666')
+    ax.spines['left'].set_color('#666666')
+    ax.spines['bottom'].set_linewidth(0.8)
+    ax.spines['left'].set_linewidth(0.8)
 
-    # Labels on x-axis for each zero
+    ax.tick_params(axis='both', colors='#666666', labelcolor='black', length=5)
+    ax.set_xticks([-6, -4, -2, 2, 4, 6, 8, 10])
+    ax.set_yticks([-0.2, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6])
+    ax.set_xlim(-7.5, 11.5)
+    ax.set_ylim(-0.55, 1.75)
+
+    ax.annotate("", xy=(11.8, 0), xytext=(11.0, 0),
+                arrowprops=dict(arrowstyle="->", color="#666666", lw=0.6), annotation_clip=False)
+    ax.text(11.3, 0.05, r"$\lambda$", fontsize=13)
+    ax.annotate("", xy=(0, 1.77), xytext=(0, 1.70),
+                arrowprops=dict(arrowstyle="->", color="#666666", lw=0.5), annotation_clip=False)
+
     zero_labels = [r"$\lambda_{c_1}$", r"$\lambda^*$", r"$\lambda_{c_2}$"]
     for z, lbl in zip(zeros, zero_labels):
-        ax.text(z, -0.025, lbl, ha="center", va="top", fontsize=11)
+        ax.scatter([z], [0], color="k", s=40, zorder=6)
+    ax.text(zeros[0] - 0.1, 0.03, zero_labels[0], ha="right", va="bottom", fontsize=13)
+    ax.text(zeros[1] - 0.15, 0.03, zero_labels[1], ha="left", va="bottom", fontsize=13)
+    ax.text(zeros[2] - 0.1, 0.03, zero_labels[2], ha="right", va="bottom", fontsize=13)
 
-    ax.set_xlim(-7, 11.5)
-    ax.set_ylim(-0.2, 1.8)
-    ax.set_yticks([-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6])
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    inset_pos = [
+        [0.06, 0.60, 0.22, 0.30],
+        [0.4,  0.60, 0.21, 0.30],
+        [0.84, 0.60, 0.22, 0.30],
+    ]
+    inset_xlim = [
+        (zeros[0] - 0.33, zeros[0] + 0.33),
+        (zeros[1] - 0.30, zeros[1] + 0.33),
+        (zeros[2] - 0.33, zeros[2] + 0.33),
+    ]
+
+    for i, (z, col, pos, xlim) in enumerate(zip(zeros, colors, inset_pos, inset_xlim)):
+        axins = ax.inset_axes(pos)
+        sc = sc_vals[i]
+        lz = np.linspace(xlim[0], xlim[1], 600)
+        gz = np.array([gY_alt(l, sc) for l in lz])
+
+        axins.plot(lz, gz, color=col, linewidth=1.8)
+        axins.axvline(z, color="blue", linestyle="--", linewidth=1.5)
+
+        axins.set_xlim(xlim)
+        margin = (np.max(gz) - np.min(gz)) * 0.1
+        if margin == 0:
+            margin = 0.1
+        axins.set_ylim(np.min(gz) - margin, np.max(gz) + margin)
+
+        axins.set_yticks([])
+        xt = np.linspace(xlim[0], xlim[1], 3)
+        axins.set_xticks(np.round(xt, 1))
+        axins.tick_params(axis='x', labelsize=10, colors='black', direction='in', pad=4)
+
+        # --- NOUVEAU STYLE DE BOX ---
+        # Masquer les bordures du haut et de droite
+        axins.spines['top'].set_visible(False)
+        axins.spines['right'].set_visible(False)
+        
+        # Garder et styliser uniquement les bordures de gauche et du bas
+        for spine_name in ['left', 'bottom']:
+            axins.spines[spine_name].set_edgecolor('#333333')
+            axins.spines[spine_name].set_linewidth(0.8)
+            axins.spines[spine_name].set_alpha(0.8)
+        # -----------------------------
+
+        ax.annotate("",
+                    xy=(0.4, 0), xycoords=axins.transAxes,
+                    xytext=(z, 0), textcoords="data",
+                    arrowprops=dict(arrowstyle="-|>", color=col, lw=1.2, mutation_scale=11),
+                    zorder=2)
+
+    box_green = "#448C2A"
+    box_blue  = "#4A5AFF"
+
+    ax.annotate(rf"$\sigma_{{\mathrm{{opt}}}}^2 = s_{{c_1}} \approx {sc_vals[0]:.2f}$",
+                xy=(zeros[0], 0), xycoords="data",
+                xytext=(zeros[0] - 0.2, -0.25), textcoords="data",
+                ha="center", va="center", fontsize=10,
+                bbox=dict(boxstyle="round,pad=0.4", facecolor="white", edgecolor=box_green, lw=1.5),
+                arrowprops=dict(arrowstyle="-", color=box_green, linestyle="--", lw=1.2), zorder=4)
+
+    ax.annotate(rf"$\mathrm{{Var}} \approx {var_Y:.3f}$",
+                xy=(0, 0), xycoords="data",
+                xytext=(1.2, -0.25), textcoords="data",
+                ha="center", va="center", fontsize=10,
+                bbox=dict(boxstyle="round,pad=0.4", facecolor="white", edgecolor=box_blue, lw=1.5),
+                arrowprops=dict(arrowstyle="-", color=box_blue, linestyle="--", lw=1.2), zorder=4)
+
+    ax.annotate(rf"$s_{{c_2}} \approx {sc_vals[2]:.2f}$",
+                xy=(zeros[2], 0), xycoords="data",
+                xytext=(zeros[2] - 0.7, -0.25), textcoords="data",
+                ha="center", va="center", fontsize=10,
+                bbox=dict(boxstyle="round,pad=0.4", facecolor="white", edgecolor=box_blue, lw=1.5),
+                arrowprops=dict(arrowstyle="-", color=box_blue, linestyle="--", lw=1.2), zorder=4)
 
     if save:
-        os.makedirs("_output", exist_ok=True)
-        fig.savefig("_output/illustration_thm21_fig2.png", dpi=150, bbox_inches="tight")
-        print("Saved _output/illustration_thm21_fig2.png")
-    plt.close(fig)
+        os.makedirs("figures", exist_ok=True)
+        fig.savefig("figures/illustration_thm21.pdf", dpi=300, bbox_inches="tight",
+                    pad_inches=0.3)
+        fig.savefig("figures/illustration_thm21.png", dpi=150, bbox_inches="tight",
+                    pad_inches=0.3)
+        print("Saved figures/illustration_thm21.pdf/.png")
+        plt.close(fig)
+    else:
+        plt.show()
 
 
 
@@ -288,52 +387,63 @@ def plot_figure3(data_sym=None, data_asym=None, save=True):
     s2_v   = data_sym["s2_v"]
     opt_v  = data_sym["opt_v"]
 
-    P1, P2, Z       = data_asym["grid"]
+    P1, P2, Z        = data_asym["grid"]
     p1b_bnd, p2b_bnd = data_asym["boundary"]
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    def _make_left():
+        fig, ax = plt.subplots(figsize=(6, 5))
+        ax.plot(p_vals, opt_v, "k-",  linewidth=2.5, label=r"$\sigma^2_{\mathrm{opt}}$")
+        ax.plot(p_vals, var_v, "b-",  linewidth=2,   label=r"$\mathrm{Var}[Y]=2p$")
+        ax.plot(p_vals, s1_v,  "r-",  linewidth=2,   label=r"$\sigma^2_1(p)$")
+        valid = [i for i, v in enumerate(s2_v) if v is not None and not np.isnan(v)]
+        if valid:
+            ax.plot(p_vals[valid], s2_v[valid], "g-", linewidth=2, label=r"$\sigma^2_2(p)$")
+        ax.axvline(1 / 6, color="gray", linestyle="--", linewidth=1)
+        ax.set_xlabel(r"$p$", fontsize=12)
+        ax.set_ylabel(r"$\sigma^2$", fontsize=12)
+        ax.set_xlim(0, 1 / 6 + 0.005)
+        ax.set_ylim(0, 0.35)
+        ax.set_xticks([0, 0.1, 1 / 6])
+        ax.set_xticklabels(["$0$", "$0.1$", r"$\frac{1}{6}$"])
+        ax.legend(fontsize=10, loc="upper left")
+        plt.tight_layout()
+        return fig
 
-    # ── Left: symmetric 3-mass ───────────────────────────────
-    ax = axes[0]
-    ax.plot(p_vals, opt_v, "k-",  linewidth=2.5, label=r"$\sigma^2_{\mathrm{opt}}$")
-    ax.plot(p_vals, var_v, "b-",  linewidth=2,   label=r"$\mathrm{Var}[Y]=2p$")
-    ax.plot(p_vals, s1_v,  "r-",  linewidth=2,   label=r"$\sigma^2_1(p)$")
+    def _make_right():
+        fig, ax = plt.subplots(figsize=(6, 5))
+        ax.contourf(P1, P2, Z, levels=[0.5, 1.5], colors=["steelblue"], alpha=0.45)
+        ax.contourf(P1, P2, Z, levels=[1.5, 2.5], colors=["firebrick"], alpha=0.45)
+        ax.plot(p1b_bnd, p2b_bnd, "k-", linewidth=2.5)
+        ax.plot([0, 1], [1, 0], "k-", linewidth=1.5)
+        ax.text(0.45, 0.35, r"$p_3 \leq 4\sqrt{p_1 p_2}$",
+                fontsize=11, ha="center", color="steelblue")
+        ax.text(0.12, 0.08, r"$p_3 > 4\sqrt{p_1 p_2}$",
+                fontsize=11, ha="center", color="firebrick")
+        ax.set_xlabel(r"$p_1$", fontsize=12)
+        ax.set_ylabel(r"$p_2$", fontsize=12)
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        plt.tight_layout()
+        return fig
 
-    valid = [i for i, v in enumerate(s2_v) if v is not None and not np.isnan(v)]
-    if valid:
-        ax.plot(p_vals[valid], s2_v[valid], "g-", linewidth=2, label=r"$\sigma^2_2(p)$")
-
-    ax.axvline(1 / 6, color="gray", linestyle="--", linewidth=1)
-    ax.set_xlabel(r"$p$", fontsize=12)
-    ax.set_ylabel(r"$\sigma^2$", fontsize=12)
-    ax.set_xlim(0, 1 / 6 + 0.005)
-    ax.set_ylim(0, 0.35)
-    ax.set_xticks([0, 0.1, 1 / 6])
-    ax.set_xticklabels(["$0$", "$0.1$", r"$\frac{1}{6}$"])
-    ax.legend(fontsize=10, loc="upper left")
-
-    # ── Right: asymmetric regimes ────────────────────────────
-    ax = axes[1]
-    cmap = plt.cm.get_cmap("RdYlBu", 2)
-    ax.pcolormesh(P1, P2, Z, cmap=cmap, alpha=0.55, shading="auto",
-                  vmin=0.5, vmax=2.5)
-    ax.plot(p1b_bnd, p2b_bnd, "k-", linewidth=2.5)
-    ax.plot([0, 1], [1, 0], "k-", linewidth=1.5)
-    ax.text(0.45, 0.35, r"$p_3 \leq 4\sqrt{p_1 p_2}$",
-            fontsize=11, ha="center", color="steelblue")
-    ax.text(0.12, 0.08, r"$p_3 > 4\sqrt{p_1 p_2}$",
-            fontsize=11, ha="center", color="firebrick")
-    ax.set_xlabel(r"$p_1$", fontsize=12)
-    ax.set_ylabel(r"$p_2$", fontsize=12)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-
-    plt.tight_layout()
     if save:
-        os.makedirs("_output", exist_ok=True)
-        fig.savefig("_output/illustration_symmetric_case_fig3.png", dpi=150, bbox_inches="tight")
-        print("Saved _output/illustration_symmetric_case_fig3.png")
-    plt.close(fig)
+        os.makedirs("figures", exist_ok=True)
+        fig_l = _make_left()
+        fig_l.savefig("figures/illustration_symmetric_case.pdf", bbox_inches="tight")
+        fig_l.savefig("figures/illustration_symmetric_case.png", bbox_inches="tight", dpi=150)
+        plt.close(fig_l)
+        print("Saved figures/illustration_symmetric_case.pdf/.png")
+        fig_r = _make_right()
+        fig_r.savefig("figures/illustration_asym_limits.pdf", bbox_inches="tight")
+        fig_r.savefig("figures/illustration_asym_limits.png", bbox_inches="tight", dpi=150)
+        plt.close(fig_r)
+        print("Saved figures/illustration_asym_limits.pdf/.png")
+    else:
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+        # rebuild on shared canvas for interactive display
+        fig_l = _make_left()
+        fig_r = _make_right()
+        plt.show()
 
 
 
@@ -367,12 +477,6 @@ def plot_figure4(data=None, save=True):
     g_curves      = data["g_curves"]
     sigma2_list   = data["sigma2_list"]
     sigma2_opt    = data["sigma2_opt"]
-    var_Y         = data["var_Y"]
-    p1            = data["p1"]
-    p2            = data["p2"]
-
-    print(f"sigma^2_opt   = {sigma2_opt:.5f}")
-    print(f"Var[Y]        = {var_Y:.5f}")
 
     colors = plt.cm.RdYlBu(np.linspace(0.05, 0.95, len(sigma2_list)))
 
@@ -386,26 +490,62 @@ def plot_figure4(data=None, save=True):
         else:
             ax.plot(lams, gvals, color=colors[i], linewidth=1.6, alpha=0.85)
 
+    # Reference lines
     ax.axhline(0, color="k", linewidth=0.8)
-    ax.axvline(0, color="k", linewidth=0.4, linestyle=":", alpha=0.4)
-    ax.set_xlabel(r"$\lambda$", fontsize=12)
-    ax.set_ylabel(r"$g_{\sigma,p_1,p_2}(\lambda)$", fontsize=12)
-    ax.set_xlim(-1.05, 0.45)
-    ax.legend(fontsize=10)
+
+    # Remove ticks and frame
+    ax.set_xticks([-1, -0.8, -0.6, -0.4, -0.2, 0.2, 0.4])
+    ax.set_xticklabels(["-1", "-0.8", "-0.6", "-0.4", "-0.2", "0.2", "0.4"], fontsize=9)
+    ax.set_yticks([])
+    ax.tick_params(axis='x', which='both', length=4, direction='out', colors='#444444')
+    ax.xaxis.set_tick_params(bottom=True)
+    ax.tick_params(axis='y', which='both', length=0)
+
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+    # Move x-axis spine to y=0 so ticks sit on the actual axis line
+    ax.spines['bottom'].set_visible(True)
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['bottom'].set_color('#444444')
+    ax.spines['bottom'].set_linewidth(0.0)  # hidden — arrow handles it
+
+    ax.set_xlim(-1.05, 0.48)
+
+    ymax = max(np.max(g) for g in g_curves)
+    ymin = min(np.min(g) for g in g_curves)
+    ax.set_ylim(ymin * 1.08, ymax * 1.18)
+
+    # x-axis arrow + λ label above the arrow at the right end
+    ax.annotate("", xy=(0.50, 0), xytext=(-1.08, 0),
+                arrowprops=dict(arrowstyle="-|>", color="k", lw=1.2), annotation_clip=False)
+    ax.text(0.485, ymax * 0.08, r"$\lambda$", fontsize=13, ha="left", va="bottom")
+
+    # y-axis arrow + g label at the top, centered on the axis
+    ax.annotate("", xy=(0, ymax * 1.15), xytext=(0, ymin * 1.08),
+                arrowprops=dict(arrowstyle="-|>", color="k", lw=1.2), annotation_clip=False)
+    ax.text(-0.015, ymax * 1.12, r"$g_{\sigma,p}(\lambda)$", fontsize=12,
+            ha="right", va="center")
+
+    ax.legend(fontsize=10, frameon=False)
 
     plt.tight_layout()
     if save:
-        os.makedirs("_output", exist_ok=True)
-        fig.savefig("_output/g_plot_p1p2_1325_figure4.png")
-        print("Saved _output/g_plot_p1p2_1325_figure4.png")
-    plt.close(fig)
+        os.makedirs("figures", exist_ok=True)
+        fig.savefig("figures/g_plot_p1p2_1325.pdf", bbox_inches="tight")
+        fig.savefig("figures/g_plot_p1p2_1325.png", bbox_inches="tight", dpi=150)
+        print("Saved figures/g_plot_p1p2_1325.pdf/.png")
+        plt.close(fig)
+    else:
+        plt.show()
 
 
 if __name__ == "__main__":
-    os.makedirs("_output", exist_ok=True)
+    os.makedirs("figures", exist_ok=True)
     print("\n=== Figure 2 ===")
     plot_figure2()
     print("\n=== Figure 3 ===")
     plot_figure3()
     print("\n=== Figure 4 ===")
     plot_figure4()
+    print("\nAll figures saved to figures/")
