@@ -47,6 +47,12 @@ We first provide in @sec-charac a general characterization of the optimal sub-Ga
 
 We then apply this framework to discrete distributions that naturally arise in learning-theoretic models. In @sec-3-mass, we analyze three-point distributions, extending the classical Bernoulli case. In the symmetric setting, @thm-TheoSymmetric3mass reveals a sharp phase transition: for probabilities $p \geq \frac{1}{6}$, the distribution is strictly sub-Gaussian, whereas for $p < \frac{1}{6}$ it is not, and the optimal variance proxy is characterized by an explicit system of equations. In the asymmetric case, we identify two regimes depending on the mass of the central atom, and derive closed-form expressions in one of them (@thm-regime1). In @sec-uniform, we further show that the discrete uniform distribution on $N$ equally spaced points is strictly sub-Gaussian for all $N \geq 2$.
 
+Building on these results, we demonstrate in @sec-applications how the optimal variance
+proxies derived in this work can be incorporated into standard learning-theoretic guarantees.
+We show that plugging these proxies into classical concentration inequalities yields tighter
+confidence bounds for empirical means, and we illustrate the impact of this refinement on regret
+bounds for stochastic multi-armed bandits, without modifying the underlying algorithms.
+
 Finally, we describe in @sec-software the open-source Python package we developed to support reproducibility, which combines analytical and numerical approaches to compute optimal sub-Gaussian variance proxies across a wide range of distributions, with direct applicability to learning-theoretic problems.
 
 # Characterization of optimal sub-Gaussian variance proxy {#sec-charac}
@@ -542,6 +548,93 @@ $$
 :::
 
 The proof of @thm-discrete-distribution is postponed to appendix @sec-appendix-proof-uniform.
+
+# Applications to learning-theoretic guarantees {#sec-applications}
+
+This section illustrates how the optimal sub-Gaussian variance proxies characterized in the
+previous sections can be directly leveraged in learning-theoretic guarantees. We focus on
+concentration inequalities for empirical means and on regret bounds for stochastic multi-armed
+bandits, two canonical settings in learning theory where sub-Gaussian assumptions play a central role.
+
+## Sub-Gaussian concentration with optimal variance proxy {#subsec-concentration}
+
+We begin by recalling a standard concentration inequality for empirical averages, emphasizing
+the role of the variance proxy. While the result itself is classical, its interest here lies in the
+fact that the variance proxy can be chosen optimally for the discrete distributions studied in
+this paper.
+
+::: {#thm-hoeffding-opt}
+## Hoeffding-type concentration with optimal variance proxy
+
+Let $X_1,\dots,X_n$ be i.i.d. random variables with mean $\mu$, such that each $X_i$ is
+$\sigma^2_{\mathrm{opt}}$-sub-Gaussian.
+Then, for all $\delta \in (0,1)$,
+$$
+\Pr\!\left(
+\left| \frac{1}{n}\sum_{i=1}^n X_i - \mu \right|
+\geq \sqrt{\frac{2\sigma^2_{\mathrm{opt}}\log(2/\delta)}{n}}
+\right)
+\leq \delta .
+$$
+:::
+
+@thm-hoeffding-opt shows that any improvement in the sub-Gaussian variance proxy
+translates directly into tighter confidence intervals for empirical means. In particular, when
+$\sigma^2_{\mathrm{opt}}=\mathrm{Var}(X)$, the resulting bound is optimal up to universal constants.
+
+## UCB with optimized sub-Gaussian parameter {#subsec-ucb}
+
+We now turn to stochastic multi-armed bandits. Consider a $K$-armed bandit problem in which
+each arm $k$ yields i.i.d. rewards with mean $\mu_k$ and sub-Gaussian tails. Classical analyses
+of upper confidence bound (UCB) algorithms [@auer2002using; @garivier2011kl] assume a generic sub-Gaussian parameter, often derived from boundedness
+assumptions. The next result highlights that the regret bound depends explicitly on the variance
+proxy and therefore benefits from its optimal calibration.
+
+::: {#thm-ucb-opt}
+## Regret bound for UCB with optimal variance proxy
+
+Consider a stochastic $K$-armed bandit problem in which rewards from arm $k$ are i.i.d. with
+mean $\mu_k$ and are $\sigma_k^2$-sub-Gaussian, where $\sigma_k^2$ denotes the optimal variance
+proxy of the reward distribution.
+Then the regret $R_T$ of the UCB algorithm at horizon $T$ satisfies
+$$
+\mathbb{E}[R_T]
+\leq
+\sum_{k:\mu_k<\mu^\star}
+\frac{C\,\sigma_k^2\log T}{\Delta_k}
++ O\!\left(\sum_{k=1}^K \Delta_k\right),
+$$
+where $\mu^\star=\max_k \mu_k$, $\Delta_k=\mu^\star-\mu_k$, and $C>0$ is a universal constant.
+:::
+
+@thm-ucb-opt follows from a standard analysis of UCB combined with
+@thm-hoeffding-opt. It shows that sharper sub-Gaussian variance proxies lead to
+improved constants in regret bounds, without any modification of the algorithm.
+
+## Instantiation: discrete three-point reward models {#subsec-3mass-bandit}
+
+We now instantiate the previous result for discrete reward distributions with three support
+points, as studied in @sec-3-mass. This setting naturally arises in applications
+where rewards are discretized or take a small number of categorical values. Three-mass bandits can model for instance ternary feedback systems common in industry, such as accept/neutral/reject signals. Refined sub-Gaussian constants directly translate into safer and more efficient exploration.
+
+::: {#cor-3mass-ucb}
+## UCB regret for three-point reward distributions
+
+Assume that rewards take values in $\{-a,0,a\}$ and follow a three-point distribution with
+probability masses $(p_{k,1},p_{k,2},p_{k,3})$ for arm $k$.
+Then the regret bound of @thm-ucb-opt holds with
+$$
+\sigma_k^2 = \sigma^2_{\mathrm{opt}}(p_{k,1},p_{k,2},p_{k,3}),
+$$
+where $\sigma^2_{\mathrm{opt}}$ is given explicitly by
+@thm-TheoSymmetric3mass and @thm-regime1.
+In particular, in the strictly sub-Gaussian regime identified in
+@thm-TheoSymmetric3mass, one has $\sigma_k^2=\mathrm{Var}(X_k)$.
+:::
+
+This corollary highlights that, for discrete reward models, the exploration bonus used by UCB
+can be calibrated exactly from the underlying distribution, leading to tighter regret guarantees
+than those obtained from generic boundedness arguments.
 
 # Software implementation {#sec-software}
 
