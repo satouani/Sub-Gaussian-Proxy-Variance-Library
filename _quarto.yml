@@ -1,8 +1,9 @@
 project:
   type: default
+  pre-render: python generate_figures.py
   render:
     - template-computo-python.qmd
-    #- README.qmd
+    - README.qmd
 
 title: "Optimal sub-Gaussian constants for discrete noise models in learning"
 author:
